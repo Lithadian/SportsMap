@@ -11,7 +11,7 @@ namespace API.Controllers
         [HttpGet("GetUserlist")]
         public IEnumerable<AppUser> Get()
         {
-            return Enumerable.Range(1,2).Select(x=> new AppUser
+            return Enumerable.Range(1,10).Select(x=> new AppUser
             {
                 Name =x,
                 Surname =x,

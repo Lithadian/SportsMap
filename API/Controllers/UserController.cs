@@ -13,9 +13,9 @@ namespace API.Controllers
         {
             return Enumerable.Range(1,10).Select(x=> new AppUser
             {
-                Name =x,
-                Surname =x,
-                Email =x,
+                Name =x.ToString(),
+                Surname =x.ToString(),
+                Email =x.ToString(),
                 Role =x,
             }).ToArray();
         }

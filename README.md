@@ -5,4 +5,5 @@
 Модели с базы в код:  
 Scaffold-DbContext "Data Source=LV-LAS-SC-0379;Initial Catalog=Sportsmap;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models  
 Что бы запустить фронт:  
-Package.json -> npm scrips -> start
+Package.json -> npm scrips -> start  
+Поменять Connection string к базе API->models->SportsMapContext->line 24->useSQLServer(*yourconnectionstring*)

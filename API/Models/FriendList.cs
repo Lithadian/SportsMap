@@ -1,14 +1,11 @@
-﻿namespace API.Models
-{
-	public class FriendList
-	{
-		public int FriendListId { get; set; }
-		public int FriendID { get; set; }
+﻿using System;
+using System.Collections.Generic;
 
-		public FriendList(int FriendListId_, int FriendID_)
-		{
-			this.FriendListId = FriendListId_;
-			this.FriendID = FriendID_;
-		}
-	}
+namespace API.Models
+{
+    public partial class FriendList
+    {
+        public int FriendListId { get; set; }
+        public int FriendId { get; set; }
+    }
 }

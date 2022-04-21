@@ -1,6 +1,7 @@
 ﻿using API.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace API.Controllers
 {
@@ -14,15 +15,10 @@ namespace API.Controllers
             _context = context;
         }
         [HttpGet("GetUserlist")]
-        public IEnumerable<AppUser> Get()
+        public async Task<List<AppUser>> Get()
         {
-            return Enumerable.Range(1, 10).Select(x => new AppUser
-            {
-                Name = x.ToString(),
-                Surname = x.ToString(),
-                Email = x.ToString(),
-                Role = (short)x,
-            }).ToArray();
+            var users = from x in _context.AppUsers select x;
+            return users.ToList();
         }
         [HttpPost("AddUser")]
         public async Task<ActionResult<AppUser>> Post(string Id, string Surname)

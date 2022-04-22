@@ -9,6 +9,7 @@ import {
   SocialAuthServiceConfig,
 } from 'angularx-social-login';
 import { GoogleLoginProvider } from 'angularx-social-login';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { GoogleLoginProvider } from 'angularx-social-login';
     HttpClientModule,
     SocialLoginModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
   ],
   providers: [{
     

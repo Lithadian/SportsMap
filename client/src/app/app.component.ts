@@ -54,6 +54,11 @@ export class AppComponent implements OnInit {
   };
   loginWithGoogle(): void {
     this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
+    // rerender after Google Auth
+    this.socialAuthService.authState.subscribe((user) => {
+      this.socialUser = user;
+      this.isLoggedin = user != null;
+    });
   };
   setUserInfo(): void{
     this.userInfo={

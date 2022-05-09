@@ -14,18 +14,53 @@ namespace API.Controllers
         {
             _context = context;
         }
+        //call to goolge api validate 
+        // bearer tocknen donten
+        //claims dostupi
         [HttpGet("GetUserlist")]
         public async Task<List<AppUser>> Get()
         {
             var users = from x in _context.AppUsers select x;
             return users.ToList();
         }
-        [HttpPost("AddUser")]
-        public async Task<ActionResult<AppUser>> Post(string Id, string Surname)
+        [HttpPost("LoginUser")]
+        public async Task<ActionResult<AppUser>> Post(UserInfo userInfo)
         {
-
+            if (userInfo == null)  return BadRequest(); 
+            var usersExist = from x in _context.AppUsers 
+                             where int.Parse(userInfo.UserId.Remove(7)) == x.UserId
+                             select x;
+            if (usersExist.Any())
+            {
+                return Ok("Existing user");
+            }
+            else
+            {
+                try
+                {
+                    var newUser = new AppUser
+                    {
+                        UserId = int.Parse(userInfo.UserId.Remove(7)),
+                        Email = userInfo.Email,
+                        Name = userInfo.Name,
+                        Surname = userInfo.Surname,
+                        Username = userInfo.Email.ToLower().Remove(userInfo.Email.IndexOf("@")).Trim(),
+                    };
+                    _context.AppUsers.Add(newUser);
+                    _context.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.Message);
+                }
+                return Ok("User Created");
+            }
             return Ok();
 
         }
+        //Edit user info
+        //Edit user role**
+        //CRUD PASAKUMS + Get pasakums list
+
     }
 }

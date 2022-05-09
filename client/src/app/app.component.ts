@@ -8,10 +8,10 @@ import {
 } from 'angularx-social-login';
 declare const google: any;
 class userInfo{
-  id:string;
-  firstName:string;
-  lastName:string;
-  email:string;
+  UserId:string;
+  Name:string;
+  Surname:string;
+  Email:string;
 }
 
 @Component({
@@ -72,10 +72,9 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.socialAuthService.authState.subscribe((user) => {
       this.socialUser = user;
       this.isLoggedin = user != null;
-      this.httpOptions.headers = this.httpOptions.headers.set('Authorization', this.socialUser.authToken);
+      //if(user != null) this.httpOptions.headers = this.httpOptions.headers.set('Authorization', this.socialUser.authToken) ;
       console.log(user);
       this.setUserInfo();
-      this.loginUser();
     }); 
     this.getUsers();
      
@@ -86,15 +85,22 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.socialAuthService.authState.subscribe((user) => {
       this.socialUser = user;
       this.isLoggedin = user != null;
+    //if(user != null) this.httpOptions.headers = this.httpOptions.headers.set('Authorization', this.socialUser.authToken) ;
+    if(this.isLoggedin){
+      this.setUserInfo();
+      this.loginUser();
+    }
     });
+
   };
   setUserInfo(): void{
     this.userInfo={
-      id :this.socialUser.id,
-      firstName: this.socialUser.firstName,
-      lastName: this.socialUser.lastName,
-      email: this.socialUser.email
+      UserId :this.socialUser.id,
+      Name: this.socialUser.firstName,
+      Surname: this.socialUser.lastName,
+      Email: this.socialUser.email
     };
+
   };
   logOut(): void {
     this.socialAuthService.signOut();

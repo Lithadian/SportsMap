@@ -30,9 +30,10 @@ namespace API.Controllers
             var usersExist = from x in _context.AppUsers 
                              where int.Parse(userInfo.UserId.Remove(7)) == x.UserId
                              select x;
+            
             if (usersExist.Any())
             {
-                return Ok("Existing user");
+                return Ok(usersExist.FirstOrDefault().Role);
             }
             else
             {
@@ -45,6 +46,8 @@ namespace API.Controllers
                         Name = userInfo.Name,
                         Surname = userInfo.Surname,
                         Username = userInfo.Email.ToLower().Remove(userInfo.Email.IndexOf("@")).Trim(),
+                        Role = 1,
+                      
                     };
                     _context.AppUsers.Add(newUser);
                     _context.SaveChanges();

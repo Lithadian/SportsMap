@@ -6,12 +6,24 @@ import {
   GoogleLoginProvider,
   SocialUser,
 } from 'angularx-social-login';
+
 declare const google: any;
 class userInfo{
   UserId:string;
   Name:string;
   Surname:string;
   Email:string;
+}
+class Event{
+  Name:string;
+  Date:Date;
+  Type:string;
+  EventStatus:number;
+  UsersMaxCount:number;
+  PlaceCoordX:number;
+  PlaceCoordY:number;
+  Description:string;
+  EventAuthor:string;
 }
 
 @Component({
@@ -23,7 +35,7 @@ class userInfo{
 export class AppComponent implements OnInit, AfterViewInit {
   //map
   @ViewChild('mapElement') mapElement:any;
-
+  map:any;
 
 
   loginForm!: FormGroup;
@@ -62,7 +74,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         title: locations[i][0]
       });}
   }
-  
+  //end Of google map implement
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -120,6 +132,6 @@ export class AppComponent implements OnInit, AfterViewInit {
       console.log(error);
     })
   };
-  map:any;
+
 
 }

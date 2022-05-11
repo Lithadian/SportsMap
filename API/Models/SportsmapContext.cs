@@ -45,6 +45,8 @@ namespace API.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
+                entity.Property(e => e.FriendListId).ValueGeneratedOnAdd();
+
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(50)
@@ -76,6 +78,8 @@ namespace API.Models
                     .IsRequired()
                     .HasMaxLength(10)
                     .IsFixedLength();
+
+                entity.Property(e => e.EventId).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.Type)
                     .HasMaxLength(10)

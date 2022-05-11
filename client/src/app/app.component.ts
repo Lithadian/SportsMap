@@ -1,11 +1,12 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   SocialAuthService,
   GoogleLoginProvider,
   SocialUser,
 } from 'angularx-social-login';
+
 
 declare const google: any;
 class userInfo{
@@ -29,54 +30,67 @@ class Event{
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css','./home.css','./map.css','./events.css']
 })
 
 export class AppComponent implements OnInit, AfterViewInit {
   //map
   @ViewChild('mapElement') mapElement:any;
-  map:any;
+  @ViewChild('username') usernameElement: any;
 
+
+  map:any;
+  
 
   loginForm!: FormGroup;
   socialUser!: SocialUser;
   isLoggedin?: boolean;
+
+  isHomePage: boolean;
+  isMapPage: boolean;
+  isEventsPage: boolean;
   title = 'The Sports Map';
   userInfo: userInfo;
   users: any;
+  events:any;
+  gay:any;
    httpOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'application/json',
       Authorization: 'my-auth-token'
     })
-  };
+  };  
   constructor(private http: HttpClient, 
     private formBuilder: FormBuilder,
-    private socialAuthService: SocialAuthService){}
+    private socialAuthService: SocialAuthService,usernameElement: ElementRef){
+      this.usernameElement=usernameElement;
+    }
+    
   ngAfterViewInit(): void {
+  }
+  renderMap(){
     this.map = new google.maps.Map(this.mapElement.nativeElement, {
       center:{ lat: 56.946, lng: 24.10589},
       zoom: 8,
     });
-    var locations = [
-      ['Bondi Beach',  56.946, 24.10589, 4],
-      ['Coogee Beach', -33.923036, 151.259052, 5],
-      ['Cronulla Beach', -34.028249, 151.157507, 3],
-      ['Manly Beach', -33.80010128657071, 151.28747820854187, 2],
-      ['Maroubra Beach', -33.950198, 151.259302, 1]
-    ];
     var i;
-    for (i = 0; i < locations.length; i++) {  
+    for (i = 0; i < this.events.length; i++) {  
       var marker = new google.maps.Marker({
-        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+        position: new google.maps.LatLng(this.events[i].placeCoordX, this.events[i].placeCoordY),
         draggable: false,
         map: this.map,
-        title: locations[i][0]
+        title: this.events[i].name
       });}
   }
   //end Of google map implement
 
+  
+  clickme() {
+    console.log('it does nothing', this.usernameElement.value);
+  }
   ngOnInit() {
+    
+    this.isHomePage = true;
     this.loginForm = this.formBuilder.group({
       email: ['', Validators.required],
       password: ['', Validators.required],
@@ -89,7 +103,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       this.setUserInfo();
     }); 
     this.getUsers();
-     
+    this.getEventList();
   };
   loginWithGoogle(): void {
     this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
@@ -132,6 +146,31 @@ export class AppComponent implements OnInit, AfterViewInit {
       console.log(error);
     })
   };
-
+  getEventList(){
+    this.http.get('https://localhost:5001/api/Event/GetEventList').subscribe(response => {
+      this.events = response;
+      console.log(response);
+    }, error=>{
+      console.log(error);
+    })
+  };
+  //Page navigation
+  toHomePage(){
+    this.isHomePage=true; 
+    this.isMapPage=false;
+    this.isEventsPage = false;
+  }
+  toMapPage(){
+    this.isHomePage=false; 
+    this.isMapPage=true;
+    this.isEventsPage = false;
+  }
+  toEventsPage(){
+    this.isHomePage=false; 
+    this.isMapPage=false;
+    this.isEventsPage = true;
+  }
+  
 
 }
+

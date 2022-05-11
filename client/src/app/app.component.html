@@ -1,37 +1,209 @@
 <div class="container" style="max-width: 550px">
-    <h2 class="text-center mb-5">Angular Login with Google</h2>
-    <div *ngIf="isLoggedin === false">
-      <div>
-        <button type="button" (click)="loginWithGoogle()" class="btn btn-danger">Login with Google</button>
-      </div>
-    </div>
-    <div *ngIf="isLoggedin === true">
-      <div class="form-group">
-        <label>First Name</label>
-        <input type="text" class="form-control" [value]="socialUser.firstName" id="firstname" readonly>
-      </div>
-      <div class="form-group">
-        <label>Last Name</label>
-        <input type="text" class="form-control" [value]="socialUser.lastName" id="lastname" readonly>
-      </div>
-      <div class="form-group">
-        <label>Email</label>
-        <input type="text" class="form-control" [value]="socialUser.email" id="email" readonly>
-      </div>
-      <button type="button" (click)="logOut()" class="btn btn-primary">Log Out</button>
-    </div>
-  </div>
-
-
-
-
-
-<div  *ngFor="let user of users">
-    <h1>{{user.name.toString() +" "+ user.surname.toString()}}</h1>
-
 </div>
 
 
-<div class="map" 
-#mapElement
-></div>
+<!-- <div  *ngFor="let user of users">
+    <h1>{{user.name.toString() +" "+ user.surname.toString()}}</h1>
+
+</div> -->
+
+
+
+
+
+
+<!-- <div class="map"  *ngIf="isMapPage ===true" 
+#mapElement>
+</div> -->
+<div *ngIf="isHomePage === true" >
+  <link href="./home.css" rel="stylesheet" />
+
+  <div class="home-container">
+    <div class="home-home">
+
+      <div class="home-block-app-decription">
+        <span class="home-text06">
+          Lorem Ipsum is simply dummy text of the printing and typesetting
+          industry. Lorem Ipsum has been the industry&apos;s standard dummy
+          text ever since the 1500s, when an unknown printer took a galley
+          of type and scrambled it to make a type specimen book. It has
+          survived not only five centuries, but also the leap into
+          electronic typesetting, remaining essentially unchanged. It was
+          popularised in the 1960s with the release of Letraset sheets
+          containing Lorem Ipsum passages, and more recently with desktop
+          publishing software like Aldus PageMaker including versions of
+          Lorem Ipsum.
+        </span>
+        <span class="home-text07">
+          Vēlies sportot? Meklē interesantus pasākumus?
+        </span>
+        <div class="home-arrows-top">
+          <img
+            alt="Arrow2470"
+            src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMTkxJyBoZWlnaHQ9JzUxJyB2aWV3Qm94PScwIDAgMTkxIDUxJyBmaWxsPSdub25lJyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnPgo8cGF0aCBkPSdNOTYuMjk4NSA1MC41MzUxQzk4LjI1OTYgNTAuNDQyOCAxMDAuMTE1IDUwLjAxNTMgMTAxLjU5OCA0OS4zMTMzTDE4Ny41NjYgOC45NTk4NkMxODkuNTIyIDguMDk2OTQgMTkwLjc0OSA2Ljg0MDgxIDE5MC45NjYgNS40NzgyNUMxOTEuMTgxIDQuMTE1NjkgMTkwLjM3MSAyLjc2MzYyIDE4OC43MTYgMS43MzI3MkMxODcuMDYyIDAuNzAwOTEzIDE4NC43MDcgMC4wNzgxMTYgMTgyLjE5IDAuMDA2ODY2OTdDMTc5LjY3MyAtMC4wNjQzODIxIDE3Ny4yMTEgMC40MjExNjUgMTc1LjM2OCAxLjM1MzZMOTUuNSAzOC44MzE0TDE1LjYzMTUgMS4zNTM2QzEzLjc4ODggMC40MjExODggMTEuMzI2OSAtMC4wNjQzODIxIDguODEwMTMgMC4wMDY4NjY5N0M2LjI5MzM0IDAuMDc4MTE2IDMuOTM4MzYgMC43MDA4OTEgMi4yODM3MyAxLjczMjcyQzAuNjI4OTc5IDIuNzYzNjUgLTAuMTgxMzYzIDQuMTE1NjUgMC4wMzQxNzc3IDUuNDc4MjVDMC4yNTEzNTQgNi44NDA4MSAxLjQ3ODI0IDguMDk2OTQgMy40MzQ0MiA4Ljk1OTg2TDg5LjQwMTkgNDkuMzEzM0M5MS4zMDE0IDUwLjIxMTQgOTMuNzkwOCA1MC42NTIxIDk2LjI5OTcgNTAuNTM1MUg5Ni4yOTg1WicgZmlsbD0nI0Y0NDQyRScvPgo8L3N2Zz4K"
+            class="home-image"
+          />
+          <img
+            alt="Arrow1473"
+            src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMTkxJyBoZWlnaHQ9JzUxJyB2aWV3Qm94PScwIDAgMTkxIDUxJyBmaWxsPSdub25lJyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnPgo8cGF0aCBkPSdNOTYuMjk4NSA1MC45ODE1Qzk4LjI1OTYgNTAuODg5MSAxMDAuMTE1IDUwLjQ2MTYgMTAxLjU5OCA0OS43NTk2TDE4Ny41NjYgOS40MDYyMUMxODkuNTIyIDguNTQzMjkgMTkwLjc0OSA3LjI4NzE2IDE5MC45NjYgNS45MjQ2QzE5MS4xODEgNC41NjIwNCAxOTAuMzcxIDMuMjA5OTcgMTg4LjcxNiAyLjE3OTA3QzE4Ny4wNjIgMS4xNDcyNiAxODQuNzA3IDAuNTI0NDY2IDE4Mi4xOSAwLjQ1MzIxN0MxNzkuNjczIDAuMzgxOTY4IDE3Ny4yMTEgMC44Njc1MTUgMTc1LjM2OCAxLjc5OTk1TDk1LjUgMzkuMjc3OEwxNS42MzE1IDEuNzk5OTVDMTMuNzg4OCAwLjg2NzUzOCAxMS4zMjY5IDAuMzgxOTY4IDguODEwMTMgMC40NTMyMTdDNi4yOTMzNCAwLjUyNDQ2NiAzLjkzODM2IDEuMTQ3MjQgMi4yODM3MyAyLjE3OTA3QzAuNjI4OTc5IDMuMjEgLTAuMTgxMzYzIDQuNTYyIDAuMDM0MTc3NyA1LjkyNDZDMC4yNTEzNTQgNy4yODcxNiAxLjQ3ODI0IDguNTQzMjkgMy40MzQ0MiA5LjQwNjIxTDg5LjQwMTkgNDkuNzU5NkM5MS4zMDE0IDUwLjY1NzggOTMuNzkwOCA1MS4wOTg1IDk2LjI5OTcgNTAuOTgxNUg5Ni4yOTg1WicgZmlsbD0nIzlEQzVCQicvPgo8L3N2Zz4K"
+            class="home-image1"
+          />
+          <img
+            alt="Arrow1495"
+            src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMTkxJyBoZWlnaHQ9JzUxJyB2aWV3Qm94PScwIDAgMTkxIDUxJyBmaWxsPSdub25lJyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnPgo8cGF0aCBkPSdNOTYuMjk4NSA1MC41MzUxQzk4LjI1OTYgNTAuNDQyOCAxMDAuMTE1IDUwLjAxNTMgMTAxLjU5OCA0OS4zMTMzTDE4Ny41NjYgOC45NTk4NkMxODkuNTIyIDguMDk2OTQgMTkwLjc0OSA2Ljg0MDgxIDE5MC45NjYgNS40NzgyNUMxOTEuMTgxIDQuMTE1NjkgMTkwLjM3MSAyLjc2MzYyIDE4OC43MTYgMS43MzI3MkMxODcuMDYyIDAuNzAwOTEzIDE4NC43MDcgMC4wNzgxMTYgMTgyLjE5IDAuMDA2ODY2OTdDMTc5LjY3MyAtMC4wNjQzODIxIDE3Ny4yMTEgMC40MjExNjUgMTc1LjM2OCAxLjM1MzZMOTUuNSAzOC44MzE0TDE1LjYzMTUgMS4zNTM2QzEzLjc4ODggMC40MjExODggMTEuMzI2OSAtMC4wNjQzODIxIDguODEwMTMgMC4wMDY4NjY5N0M2LjI5MzM0IDAuMDc4MTE2IDMuOTM4MzYgMC43MDA4OTEgMi4yODM3MyAxLjczMjcyQzAuNjI4OTc5IDIuNzYzNjUgLTAuMTgxMzYzIDQuMTE1NjUgMC4wMzQxNzc3IDUuNDc4MjVDMC4yNTEzNTQgNi44NDA4MSAxLjQ3ODI0IDguMDk2OTQgMy40MzQ0MiA4Ljk1OTg2TDg5LjQwMTkgNDkuMzEzM0M5MS4zMDE0IDUwLjIxMTQgOTMuNzkwOCA1MC42NTIxIDk2LjI5OTcgNTAuNTM1MUg5Ni4yOTg1WicgZmlsbD0nI0Y0NDQyRScvPgo8L3N2Zz4K"
+            class="home-image2"
+          />
+        </div>
+      </div>
+      <div class="home-block-map">
+        <span class="home-text08">Atrodi pasākumus kartē!</span>
+        <img
+          alt="Map4105"
+          src="public/playground_assets/map-placeholder1.png"
+          class="home-image3"
+        />
+        <span class="home-text09">
+          <span>Karte uzrāda gaidāmos notikumus.</span>
+          <br />
+          <span></span>
+          <br />
+          <span>Izvēlies jebkuru, lai uzzinātu par to vairāk!</span>
+        </span>
+        <div class="home-arrows-bottom">
+          <img
+            alt="Arrow24109"
+            src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMTkxJyBoZWlnaHQ9JzUxJyB2aWV3Qm94PScwIDAgMTkxIDUxJyBmaWxsPSdub25lJyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnPgo8cGF0aCBkPSdNOTYuMjk4NSA1MC41MzUxQzk4LjI1OTYgNTAuNDQyOCAxMDAuMTE1IDUwLjAxNTMgMTAxLjU5OCA0OS4zMTMzTDE4Ny41NjYgOC45NTk4NkMxODkuNTIyIDguMDk2OTQgMTkwLjc0OSA2Ljg0MDgxIDE5MC45NjYgNS40NzgyNUMxOTEuMTgxIDQuMTE1NjkgMTkwLjM3MSAyLjc2MzYyIDE4OC43MTYgMS43MzI3MkMxODcuMDYyIDAuNzAwOTEzIDE4NC43MDcgMC4wNzgxMTYgMTgyLjE5IDAuMDA2ODY2OTdDMTc5LjY3MyAtMC4wNjQzODIxIDE3Ny4yMTEgMC40MjExNjUgMTc1LjM2OCAxLjM1MzZMOTUuNSAzOC44MzE0TDE1LjYzMTUgMS4zNTM2QzEzLjc4ODggMC40MjExODggMTEuMzI2OSAtMC4wNjQzODIxIDguODEwMTMgMC4wMDY4NjY5N0M2LjI5MzM0IDAuMDc4MTE2IDMuOTM4MzYgMC43MDA4OTEgMi4yODM3MyAxLjczMjcyQzAuNjI4OTc5IDIuNzYzNjUgLTAuMTgxMzYzIDQuMTE1NjUgMC4wMzQxNzc3IDUuNDc4MjVDMC4yNTEzNTQgNi44NDA4MSAxLjQ3ODI0IDguMDk2OTQgMy40MzQ0MiA4Ljk1OTg2TDg5LjQwMTkgNDkuMzEzM0M5MS4zMDE0IDUwLjIxMTQgOTMuNzkwOCA1MC42NTIxIDk2LjI5OTcgNTAuNTM1MUg5Ni4yOTg1WicgZmlsbD0nI0Y0NDQyRScvPgo8L3N2Zz4K"
+            class="home-image4"
+          />
+          <img
+            alt="Arrow14111"
+            src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMTkxJyBoZWlnaHQ9JzUxJyB2aWV3Qm94PScwIDAgMTkxIDUxJyBmaWxsPSdub25lJyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnPgo8cGF0aCBkPSdNOTYuMjk4NSA1MC45ODE0Qzk4LjI1OTYgNTAuODg5IDEwMC4xMTUgNTAuNDYxNSAxMDEuNTk4IDQ5Ljc1OTZMMTg3LjU2NiA5LjQwNjE1QzE4OS41MjIgOC41NDMyMyAxOTAuNzQ5IDcuMjg3MSAxOTAuOTY2IDUuOTI0NTRDMTkxLjE4MSA0LjU2MTk4IDE5MC4zNzEgMy4yMDk5MSAxODguNzE2IDIuMTc5MDFDMTg3LjA2MiAxLjE0NzIgMTg0LjcwNyAwLjUyNDQwNSAxODIuMTkgMC40NTMxNTZDMTc5LjY3MyAwLjM4MTkwNyAxNzcuMjExIDAuODY3NDU0IDE3NS4zNjggMS43OTk4OEw5NS41IDM5LjI3NzdMMTUuNjMxNSAxLjc5OTg4QzEzLjc4ODggMC44Njc0NzcgMTEuMzI2OSAwLjM4MTkwNyA4LjgxMDEzIDAuNDUzMTU2QzYuMjkzMzQgMC41MjQ0MDUgMy45MzgzNiAxLjE0NzE4IDIuMjgzNzMgMi4xNzkwMUMwLjYyODk3OSAzLjIwOTkzIC0wLjE4MTM2MyA0LjU2MTkzIDAuMDM0MTc3NyA1LjkyNDU0QzAuMjUxMzU0IDcuMjg3MSAxLjQ3ODI0IDguNTQzMjMgMy40MzQ0MiA5LjQwNjE1TDg5LjQwMTkgNDkuNzU5NkM5MS4zMDE0IDUwLjY1NzcgOTMuNzkwOCA1MS4wOTg0IDk2LjI5OTcgNTAuOTgxNEg5Ni4yOTg1WicgZmlsbD0nIzlEQzVCQicvPgo8L3N2Zz4K"
+            class="home-image5"
+          />
+          <img
+            alt="Arrow14113"
+            src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMTkxJyBoZWlnaHQ9JzUxJyB2aWV3Qm94PScwIDAgMTkxIDUxJyBmaWxsPSdub25lJyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnPgo8cGF0aCBkPSdNOTYuMjk4NSA1MC41MzUxQzk4LjI1OTYgNTAuNDQyOCAxMDAuMTE1IDUwLjAxNTMgMTAxLjU5OCA0OS4zMTMzTDE4Ny41NjYgOC45NTk4NkMxODkuNTIyIDguMDk2OTQgMTkwLjc0OSA2Ljg0MDgxIDE5MC45NjYgNS40NzgyNUMxOTEuMTgxIDQuMTE1NjkgMTkwLjM3MSAyLjc2MzYyIDE4OC43MTYgMS43MzI3MkMxODcuMDYyIDAuNzAwOTEzIDE4NC43MDcgMC4wNzgxMTYgMTgyLjE5IDAuMDA2ODY2OTdDMTc5LjY3MyAtMC4wNjQzODIxIDE3Ny4yMTEgMC40MjExNjUgMTc1LjM2OCAxLjM1MzZMOTUuNSAzOC44MzE0TDE1LjYzMTUgMS4zNTM2QzEzLjc4ODggMC40MjExODggMTEuMzI2OSAtMC4wNjQzODIxIDguODEwMTMgMC4wMDY4NjY5N0M2LjI5MzM0IDAuMDc4MTE2IDMuOTM4MzYgMC43MDA4OTEgMi4yODM3MyAxLjczMjcyQzAuNjI4OTc5IDIuNzYzNjUgLTAuMTgxMzYzIDQuMTE1NjUgMC4wMzQxNzc3IDUuNDc4MjVDMC4yNTEzNTQgNi44NDA4MSAxLjQ3ODI0IDguMDk2OTQgMy40MzQ0MiA4Ljk1OTg2TDg5LjQwMTkgNDkuMzEzM0M5MS4zMDE0IDUwLjIxMTQgOTMuNzkwOCA1MC42NTIxIDk2LjI5OTcgNTAuNTM1MUg5Ni4yOTg1WicgZmlsbD0nI0Y0NDQyRScvPgo8L3N2Zz4K"
+            class="home-image6"
+          />
+        </div>
+      </div>
+      <div class="home-block-biggest-events">
+        <span class="home-text15">
+          <span class="home-text16">Johnie Walker Fan kluba tikšanās</span>
+          <br />
+          <span class="home-text18">=</span>
+          <span class="home-text19">16.</span>
+          <span class="home-text20">martā</span>
+          <br />
+          <span class="home-text22">=</span>
+          <span class="home-text23">500</span>
+          <span class="home-text24">
+            <span>cilvēki pieteikušies</span>
+            <br />
+            <span></span>
+            <br />
+            <span>Surströmming ātrēšanas sacensības</span>
+            <br />
+            <span>=</span>
+          </span>
+          <span class="home-text32">17.</span>
+          <span class="home-text33">maijā</span>
+          <br />
+          <span class="home-text35">=</span>
+          <span class="home-text36">1</span>
+          <span class="home-text37">
+            <span>cilvēks pieteicies</span>
+            <br />
+            <span></span>
+            <br />
+            <span>Tour de Swamp</span>
+            <br />
+            <span>=</span>
+          </span>
+          <span class="home-text45">12.</span>
+          <span class="home-text46">novembrī</span>
+          <br />
+          <span class="home-text48">=</span>
+          <span class="home-text49">10</span>
+          <span class="home-text50">cilvēki pieteikušies</span>
+        </span>
+        <span class="home-text51">Lielākie gaidāmie notikumi</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="isMapPage ===true">
+  <link href="./map.css" rel="stylesheet" />
+
+  <div class="map-container">
+    <div class="map-map">
+      <div class="map-block-map">
+        <span class="map-text08">Karte</span>
+        <div class="map-event-list-container">
+          <ul class="map-ul list">
+            <li class="list-item" *ngFor="let event of events"><span>{{event.name}}</span></li>
+          </ul>
+        </div>
+        <div class="map-map-container" #mapElement (dblclick)="renderMap()"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="isEventsPage ===true">
+  <link href="./events.css" rel="stylesheet" />
+
+  <div class="events-container">
+    <div class="events-events">
+      <div class="events-block-events">
+        <span class="events-text08">Pasākumi</span>
+        <div class="events-full-event-list-container">
+          <ul class="events-ul list">
+            <li class="list-item"><span>Text</span></li>
+            <li class="list-item"><span>Text</span></li>
+            <li class="list-item"><span>Text</span></li>
+          </ul>
+        </div>
+        <input type="text" id="username" name="username" #username>
+        <button type="button" (click)="clickme()">Clickme</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+<div class="home-header">
+  <img
+    alt="LOGO418"
+    src="public/playground_assets/applogo.png"
+    class="home-app-logo"
+  />
+  <button class="home-login-reg-button button" *ngIf="isLoggedin === false"(click)="loginWithGoogle()">
+    <span class="home-text"><span>Ienākt/Reģistrēties</span></span>
+  </button>
+  <button class="home-login-reg-button button" *ngIf="isLoggedin === true" (click)="logOut()">Log Out</button>
+  
+  <button class="home-map-button button" (click)="toMapPage()">
+    <span class="home-text02"><span>Karte</span></span>
+  </button>
+  <button class="home-event-button button"(click)="toEventsPage()">
+    <span class="home-text04"><span>Pasākumi</span></span>
+  </button>
+  <span class="home-app-name-text"(click)="toHomePage()">Vieta Nosaukumam</span>
+</div>
+<div class="home-footer">
+  <img
+    alt="HeaderLine24130"
+    src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMTQ0MCcgaGVpZ2h0PSczJyB2aWV3Qm94PScwIDAgMTQ0MCAzJyBmaWxsPSdub25lJyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnPgo8bGluZSB4MT0nMTQ0MicgeTE9JzEuNScgeTI9JzEuNScgc3Ryb2tlPScjRjQ0NDJFJyBzdHJva2Utd2lkdGg9JzMnLz4KPC9zdmc+Cg=="
+    class="home-svg"
+  />
+  <img
+    alt="HeaderLine24131"
+    src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMTQ0MCcgaGVpZ2h0PSczJyB2aWV3Qm94PScwIDAgMTQ0MCAzJyBmaWxsPSdub25lJyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnPgo8bGluZSB4MT0nMTQ0MicgeTE9JzEuNScgeTI9JzEuNScgc3Ryb2tlPScjRjQ0NDJFJyBzdHJva2Utd2lkdGg9JzMnLz4KPC9zdmc+Cg=="
+    class="home-svg1"
+  />
+  <div class="home-footer-content">
+    <button class="home-connect-button button">
+      <span class="home-text52"><span>Sazināties</span></span>
+    </button>
+    <span class="home-text54">©2022 RTU</span>
+  </div>
+</div>

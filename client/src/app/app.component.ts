@@ -240,6 +240,9 @@ export class AppComponent implements OnInit, AfterViewInit {
     })
   });
   };
+  removeT(input: string) {
+    return input.replace('T', ' ');
+  };
   //Page navigation
   toHomePage(){
     this.isHomePage=true; 
@@ -339,6 +342,11 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.isSystemAdminPage=false;
     this.isProfile=false;
     this.isConnectPage=true;
+  }
+  // map page functions
+  showOnMap() {
+  }
+  toEventDescription() {
   }
 }
 

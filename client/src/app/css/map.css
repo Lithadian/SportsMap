@@ -226,6 +226,18 @@
   margin-right: 2vw;
   padding-right: 1.5rem;
 }
+/* event cards on map page */
+.eventMapCardListItem {
+  margin-bottom: 10px;
+}
+/* .eventMapName {
+  margin-bottom: 2px;
+} */
+
+.eventMapCardButton {
+  width: 105%;
+}
+/*  */
 .map-map-container {
   top: 0px;
   flex: 0 0 auto;

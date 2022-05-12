@@ -1,0 +1,446 @@
+.connect-container {
+  width: 100%;
+  display: flex;
+  overflow: auto;
+  min-height: 100vh;
+  align-items: center;
+  flex-direction: column;
+}
+.connect-connect {
+  width: 100%;
+  height: 1319px;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  align-self: stretch;
+  box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.39);
+  box-sizing: border-box;
+  align-items: flex-start;
+  border-color: transparent;
+  background-color: rgba(24, 40, 37, 0.699999988079071);
+}
+.connect-header {
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  height: 133px;
+  display: flex;
+  position: absolute;
+  box-sizing: border-box;
+  align-items: flex-start;
+  flex-shrink: 1;
+  border-color: transparent;
+  background-color: rgba(244, 68, 45, 1);
+}
+.connect-app-logo {
+  top: 6px;
+  left: 26.26727294921875px;
+  width: 98px;
+  height: 99px;
+  position: absolute;
+  object-fit: cover;
+  border-color: transparent;
+}
+.connect-profile-button {
+  /* top: 23px; */
+  top: 30px;
+  right: 5px;
+  /* width: 236px; */
+  width: auto;
+  display: flex;
+  z-index: 101;
+  position: absolute;
+  text-align: right;
+  transition: 0.3s;
+  margin-left: 2vw;
+  padding-top: 1rem;
+  border-color: #000000;
+  border-width: 5px;
+  margin-right: 1vw;
+  padding-left: 2rem;
+  border-radius: 40px;
+  padding-right: 1rem;
+  flex-direction: row;
+  padding-bottom: 1rem;
+  justify-content: flex-end;
+  background-color: #D9D9D9;
+}
+.connect-profile-button:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+.connect-profile-icon {
+  top: 0px;
+  left: 10px;
+  /* width: 70px; */
+  width: 22%;
+  bottom: 0px;
+  /* height: 70px; */
+  height: auto;
+  margin: auto;
+  position: absolute;
+  align-self: flex-start;
+  object-fit: cover;
+}
+.connect-text {
+  /* font-size: 40px; */
+  font-size: 20px;
+  text-align: right;
+  font-family: Comic Sans MS;
+  /*  */
+  margin-left: 1vw;
+}
+.connect-map-button {
+  /* top: 30px; */
+  top: 38px;
+  right: 30vw;
+  z-index: 101;
+  position: absolute;
+  transition: 0.3s;
+  margin-left: 1vw;
+  border-color: rgba(0, 0, 0, 0);
+  margin-right: 1vw;
+  border-radius: 20px;
+  background-color: rgba(244, 68, 45, 1);
+}
+.connect-map-button:hover {
+  cursor: pointer;
+  text-decoration: underline;
+  background-color: #D9D9D9;
+}
+.connect-text02 {
+  /* font-size: 40px; */
+  font-size: 30px;
+  font-family: Comic Sans MS;
+}
+.connect-event-button {
+  /* top: 30px; */
+  top: 38px;
+  right: 39vw;
+  z-index: 101;
+  position: absolute;
+  transition: 0.3s;
+  border-color: rgba(0, 0, 0, 0);
+  /* margin-right: 1vw; */
+  margin-right: 2vw;
+  border-radius: 20px;
+  background-color: rgba(244, 68, 45, 1);
+}
+.connect-event-button:hover {
+  cursor: pointer;
+  text-decoration: underline;
+  background-color: #D9D9D9;
+}
+.connect-text04 {
+  /* font-size: 40px; */
+  font-size: 30px;
+  font-family: Comic Sans MS;
+}
+.connect-app-name-text {
+  top: 28px;
+  left: 149px;
+  color: rgba(225, 229, 238, 1);
+  height: auto;
+  position: absolute;
+  font-size: 48px;
+  align-self: auto;
+  font-style: italic;
+  text-align: left;
+  font-family: Comic Neue;
+  font-weight: 700px;
+  line-height: normal;
+  font-stretch: normal;
+  text-decoration: none;
+}
+.connect-admin-button {
+  /* top: 30px; */
+  top: 38px;
+  right: 15vw;
+  z-index: 101;
+  position: absolute;
+  transition: 0.3s;
+  margin-left: 1vw;
+  border-color: rgba(0, 0, 0, 0);
+  /* margin-right: 1vw; */
+  margin-right: -2vw;
+  border-radius: 20px;
+  background-color: rgba(244, 68, 45, 1);
+}
+.connect-admin-button:hover {
+  cursor: pointer;
+  text-decoration: underline;
+  background-color: #D9D9D9;
+}
+.connect-text06 {
+  /* font-size: 40px; */
+  font-size: 30px;
+  font-family: Comic Sans MS;
+}
+.connect-block-connect {
+  top: 10vh;
+  left: 8vw;
+  right: 8vw;
+  height: 969px;
+  display: flex;
+  position: absolute;
+  align-self: stretch;
+  box-sizing: border-box;
+  margin-top: 5vh;
+  align-items: flex-start;
+  border-color: rgba(244, 68, 45, 1);
+  border-width: 5px;
+  border-radius: 20px;
+  margin-bottom: 5vh;
+  justify-content: center;
+  background-color: #E1E5EE;
+}
+.connect-text08 {
+  top: 23px;
+  left: 2vw;
+  color: rgba(0, 0, 0, 1);
+  height: auto;
+  position: absolute;
+  font-size: 40px;
+  align-self: auto;
+  font-style: normal;
+  text-align: left;
+  font-family: Comic Sans MS;
+  font-weight: 400px;
+  line-height: normal;
+  font-stretch: normal;
+  text-decoration: underline 5px rgba(244, 68, 45, 1);
+}
+.connect-connect-form {
+  top: 15%;
+  flex: 0 0 auto;
+  left: 2vw;
+  right: 2vw;
+  height: 393px;
+  display: flex;
+  position: absolute;
+  align-self: stretch;
+  box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.4);
+  align-items: center;
+  border-radius: 40px;
+  justify-content: flex-start;
+  background-color: #ffffff;
+}
+.connect-message-type-place {
+  top: 4vh;
+  flex: 0 0 auto;
+  left: 2vw;
+  width: 404px;
+  height: 37px;
+  display: flex;
+  position: absolute;
+  align-self: stretch;
+  align-items: center;
+  justify-content: flex-start;
+}
+.connect-text09 {
+  top: 9px;
+  left: 0px;
+  position: absolute;
+  align-self: stretch;
+  font-family: Comic Sans MS;
+}
+.connect-message-type-select {
+  top: 0px;
+  /* right: -1.5vw; */
+  left: 11vw;
+  width: 30vw;
+  bottom: 0px;
+  margin: auto;
+  position: absolute;
+  border-color: #000000;
+  border-width: 3px;
+  border-radius: 10px;
+}
+.connect-message-content-place {
+  flex: 0 0 auto;
+  left: 2vw;
+  width: 1275px;
+  bottom: 2px;
+  height: 223px;
+  display: flex;
+  position: absolute;
+  align-self: stretch;
+  align-items: center;
+  margin-bottom: 2vh;
+  justify-content: flex-start;
+}
+.connect-message-content-field {
+  top: 0px;
+  right: 22vw;
+  width: 65%;
+  height: 221px;
+  position: absolute;
+  align-self: stretch;
+  font-family: Comic Sans MS;
+  border-width: 3px;
+  border-radius: 15px;
+}
+.connect-text10 {
+  top: 9px;
+  left: 0px;
+  position: absolute;
+  align-self: stretch;
+  font-family: Comic Sans MS;
+}
+.connect-container1 {
+  top: 65vh;
+  flex: 0 0 auto;
+  left: 5px;
+  width: 100%;
+  height: 119px;
+  display: flex;
+  position: absolute;
+  align-self: flex-end;
+}
+.connect-cancel-message-button {
+  top: 24px;
+  left: 3vw;
+  width: 500px;
+  display: flex;
+  z-index: 101;
+  position: absolute;
+  align-self: center;
+  box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.39);
+  text-align: center;
+  transition: 0.3s;
+  border-color: #000000;
+  border-width: 5px;
+  padding-left: 0.5rem;
+  border-radius: 30px;
+  padding-right: 0.5rem;
+  flex-direction: row;
+  background-color: #F4442E;
+}
+.connect-cancel-message-button:hover {
+  cursor: pointer;
+  text-decoration: underline;
+  background-color: #999999;
+}
+.connect-text11 {
+  width: 100%;
+  font-size: 40px;
+  align-self: center;
+  text-align: center;
+  font-family: Comic Sans MS;
+}
+.connect-text12 {
+  text-align: center;
+  font-family: Comic Sans MS;
+}
+.connect-send-message-button {
+  top: 24px;
+  right: 3vw;
+  width: 447px;
+  display: flex;
+  z-index: 101;
+  position: absolute;
+  align-self: center;
+  box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.39);
+  text-align: center;
+  transition: 0.3s;
+  border-color: #000000;
+  border-width: 5px;
+  border-radius: 30px;
+  flex-direction: row;
+  background-color: #9DC5BB;
+}
+.connect-send-message-button:hover {
+  cursor: pointer;
+  text-decoration: underline;
+  background-color: #999999;
+}
+.connect-text13 {
+  width: 100%;
+  font-size: 40px;
+  align-self: center;
+  text-align: center;
+  font-family: Comic Sans MS;
+}
+.connect-text14 {
+  text-align: center;
+  font-family: Comic Sans MS;
+}
+.connect-footer {
+  left: 0px;
+  width: 100%;
+  bottom: 0px;
+  height: 133px;
+  display: flex;
+  position: absolute;
+  box-sizing: border-box;
+  margin-top: 5vh;
+  align-items: center;
+  flex-shrink: 1;
+  border-color: transparent;
+  justify-content: center;
+  background-color: rgba(244, 68, 45, 1);
+}
+.connect-svg {
+  top: -10px;
+  right: right;
+  height: 5px;
+  z-index: 100;
+  position: absolute;
+}
+.connect-svg1 {
+  top: -20px;
+  flex: 1;
+  right: right;
+  height: 4px;
+  z-index: 101;
+  position: absolute;
+}
+.connect-footer-content {
+  flex: 0 0 auto;
+  width: 100%;
+  display: flex;
+  position: relative;
+  align-self: flex-start;
+  margin-top: 10px;
+  align-items: center;
+  flex-direction: column;
+}
+.connect-connect-button {
+  width: 230px;
+  z-index: 101;
+  align-self: center;
+  transition: 0.3s;
+  border-color: rgba(0, 0, 0, 0);
+  border-radius: 20px;
+  background-color: rgba(244, 68, 45, 1);
+}
+.connect-connect-button:hover {
+  cursor: pointer;
+  text-decoration: underline;
+  background-color: #D9D9D9;
+}
+.connect-text15 {
+  /* font-size: 40px; */
+  font-size: 30px;
+  text-align: center;
+  font-family: Comic Sans MS;
+}
+.connect-text17 {
+  left: 0px;
+  color: rgba(0, 0, 0, 1);
+  right: 0px;
+  bottom: -43px;
+  height: auto;
+  margin: auto;
+  z-index: 101;
+  position: absolute;
+  font-size: 15px;
+  align-self: auto;
+  font-style: normal;
+  text-align: center;
+  font-family: Comic Neue;
+  font-weight: 400px;
+  line-height: normal;
+  font-stretch: normal;
+  text-decoration: none;
+}

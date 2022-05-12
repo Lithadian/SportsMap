@@ -23,6 +23,15 @@ namespace API.Controllers
             var users = from x in _context.AppUsers select x;
             return users.ToList();
         }
+        [HttpGet("GetUserInfo")]
+        public async Task<AppUser> Get(string userId)
+        {
+            var user = from x in _context.AppUsers
+                        where int.Parse(userId.Remove(7)) == x.UserId
+                        select x;
+            return user.FirstOrDefault();
+        }
+
         [HttpPost("LoginUser")]
         public async Task<ActionResult<AppUser>> Post(UserInfo userInfo)
         {
@@ -56,11 +65,55 @@ namespace API.Controllers
                 {
                     return BadRequest(ex.Message);
                 }
-                return Ok("User Created");
+                return Ok("{}");
             }
             return Ok();
 
         }
+
+        [HttpPost("UpdateUser")]
+        public async Task<ActionResult> Post(AppUser userInfo)
+        {
+
+            try
+            {
+                if (userInfo == null) return BadRequest();
+                var result = (from p in _context.AppUsers
+                              where p.UserId == userInfo.UserId
+                              select p).SingleOrDefault();
+                if (result != null)
+                {
+                    if(userInfo.UserDescription !=null)
+                    {
+                        result.UserDescription = userInfo.UserDescription;
+                    }
+                    if (userInfo.Name != null)
+                    {
+                        result.Name = userInfo.Name;
+                    }
+                    if (userInfo.Surname != null)
+                    {
+                        result.Surname = userInfo.Surname;
+                    }
+                    if (userInfo.Email != null)
+                    {
+                        result.Email = userInfo.Email;
+                    }
+                    if (userInfo.Username != null)
+                    {
+                        result.Username = userInfo.Username;
+                    }
+                }
+                
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            return Ok("{}");
+        }
+
         //Edit user info
         //Edit user role**
         //CRUD PASAKUMS + Get pasakums list

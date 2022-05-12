@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import {
   SocialAuthService,
   GoogleLoginProvider,
@@ -30,7 +30,18 @@ class Event{
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css','./home.css','./map.css','./events.css']
+  styleUrls: [
+    './app.component.css',
+    './css/home.css',
+    './css/map.css',
+    './css/events.css',
+    './css/administer.css',
+    './css/connect.css',
+    './css/event-admin.css',
+    './css/user-admin.css',
+    './css/system-admin.css',
+    './css/profile.css'
+  ]
 })
 
 export class AppComponent implements OnInit, AfterViewInit {
@@ -49,6 +60,13 @@ export class AppComponent implements OnInit, AfterViewInit {
   isHomePage: boolean;
   isMapPage: boolean;
   isEventsPage: boolean;
+  isAdminister: boolean;
+  isUserAdminPage: boolean;
+  isEventAdminPage: boolean;
+  isSystemAdminPage: boolean;
+  isProfile: boolean;
+  isConnectPage: boolean;
+
   title = 'The Sports Map';
   userInfo: userInfo;
   users: any;
@@ -62,8 +80,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   };  
   constructor(private http: HttpClient, 
     private formBuilder: FormBuilder,
-    private socialAuthService: SocialAuthService,usernameElement: ElementRef){
-      this.usernameElement=usernameElement;
+    private socialAuthService: SocialAuthService,){
     }
     
   ngAfterViewInit(): void {
@@ -83,10 +100,13 @@ export class AppComponent implements OnInit, AfterViewInit {
       });}
   }
   //end Of google map implement
-
-  
-  clickme() {
-    console.log('it does nothing', this.usernameElement.value);
+  profileForm = new FormGroup({
+    firstName: new FormControl(''),
+    lastName: new FormControl(''),
+  });
+  onSubmit() {
+    // TODO: Use EventEmitter with form value
+    console.warn(this.profileForm.value);
   }
   ngOnInit() {
     
@@ -159,18 +179,100 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.isHomePage=true; 
     this.isMapPage=false;
     this.isEventsPage = false;
+    this.isAdminister=false;
+    this.isUserAdminPage=false;
+    this.isEventAdminPage=false;
+    this.isSystemAdminPage=false;
+    this.isProfile=false;
+    this.isConnectPage=false;
   }
   toMapPage(){
     this.isHomePage=false; 
     this.isMapPage=true;
     this.isEventsPage = false;
+    this.isAdminister=false;
+    this.isUserAdminPage=false;
+    this.isEventAdminPage=false;
+    this.isSystemAdminPage=false;
+    this.isProfile=false;
+    this.isConnectPage=false;
   }
   toEventsPage(){
     this.isHomePage=false; 
     this.isMapPage=false;
     this.isEventsPage = true;
+    this.isAdminister=false;
+    this.isUserAdminPage=false;
+    this.isEventAdminPage=false;
+    this.isSystemAdminPage=false;
+    this.isProfile=false;
+    this.isConnectPage=false;
   }
-  
-
+  toAdminister(){
+    this.isHomePage=false;
+    this.isMapPage=false;
+    this.isEventsPage=false;
+    this.isAdminister=true;
+    this.isUserAdminPage=false;
+    this.isEventAdminPage=false;
+    this.isSystemAdminPage=false;
+    this.isProfile=false;
+    this.isConnectPage=false;
+  }
+  toUserAdminPage(){
+    this.isHomePage=false;
+    this.isMapPage=false;
+    this.isEventsPage=false;
+    this.isAdminister=false;
+    this.isUserAdminPage=true;
+    this.isEventAdminPage=false;
+    this.isSystemAdminPage=false;
+    this.isProfile=false;
+    this.isConnectPage=false;
+  }
+  toEventAdminPage(){
+    this.isHomePage=false;
+    this.isMapPage=false;
+    this.isEventsPage=false;
+    this.isAdminister=false;
+    this.isUserAdminPage=false;
+    this.isEventAdminPage=true;
+    this.isSystemAdminPage=false;
+    this.isProfile=false;
+    this.isConnectPage=false;
+  }
+  toSystemAdminPage(){
+    this.isHomePage=false;
+    this.isMapPage=false;
+    this.isEventsPage=false;
+    this.isAdminister=false;
+    this.isUserAdminPage=false;
+    this.isEventAdminPage=false;
+    this.isSystemAdminPage=true;
+    this.isProfile=false;
+    this.isConnectPage=false;
+  }
+  toProfile(){
+    this.isHomePage=false;
+    this.isMapPage=false;
+    this.isEventsPage=false;
+    this.isAdminister=false;
+    this.isUserAdminPage=false;
+    this.isEventAdminPage=false;
+    this.isSystemAdminPage=false;
+    this.isProfile=true;
+    this.isConnectPage=false;
+  }
+  toConnectPage(){
+    this.isHomePage=false;
+    this.isMapPage=false;
+    this.isEventsPage=false;
+    this.isAdminister=false;
+    this.isUserAdminPage=false;
+    this.isEventAdminPage=false;
+    this.isSystemAdminPage=false;
+    this.isProfile=false;
+    this.isConnectPage=true;
+  }
 }
 

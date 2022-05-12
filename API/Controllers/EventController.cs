@@ -46,7 +46,7 @@ namespace API.Controllers
                 if (EventInfo.EventAuthor != null) _event.EventAuthor = int.Parse(EventInfo.EventAuthor.Remove(7));
                 _context.Events.Add(_event);
                 _context.SaveChanges();
-                return Ok("Event Created");
+                return Ok("{}");
             }
             catch (Exception ex)
             {

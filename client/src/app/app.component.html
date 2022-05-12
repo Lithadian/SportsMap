@@ -162,27 +162,37 @@
           <span class="events-text08">Pasākumi</span>
           <div class="events-full-event-list-container">
             <ul class="events-ul list">
-              <li class="list-item"><span>Text</span></li>
-              <li class="list-item"><span>Text</span></li>
-              <li class="list-item"><span>Text</span></li>
+              <li class="list-item"*ngFor="let event of events"><span>{{event.name}}</span></li>
+
             </ul>
           </div>
-          <label for="name">Name: </label>
-          <form [formGroup]="profileForm"(ngSubmit)="onSubmit()">
+          <div *ngIf="isLoggedin === true">
+            <form [formGroup]="createEventForm"(ngSubmit)="createEvent()">
 
-            <label for="first-name">First Name: </label>
-            <input id="first-name" type="text" formControlName="firstName">
-          
-            <label for="last-name">Last Name: </label>
-            <input id="last-name" type="text" formControlName="lastName">
-            <button type="submit" [disabled]="!profileForm.valid">Submit</button>
-          </form>
+              <label for="first-name">Event name: </label>
+              <input id="first-name" type="text" formControlName="name">
+            
+              <label for="last-name">Event datums: </label>
+              <input id="last-name" type="text" formControlName="date">
+              <label for="last-name">Event tips: </label>
+              <input id="last-name" type="text" formControlName="type">
+              <label for="last-name">Event maksimals cilveku skaits: </label>
+              <input id="last-name" type="text" formControlName="usersMaxCount">
+              <label for="last-name">Event x-coord: </label>
+              <input id="last-name" type="text" formControlName="placeCoordX">
+              <label for="last-name">Event y-coord: </label>
+              <input id="last-name" type="text" formControlName="placeCoordY">
+              <label for="last-name">Event apraksts: </label>
+              <input id="last-name" type="text" formControlName="description">
+              <button type="submit" [disabled]="!createEventForm.valid">Submit</button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
-  <div *ngIf="isAdminister ===true && isLoggedin === true">
+  <div *ngIf="isAdminister ===true && isLoggedin === true && userRole ===2">
     <link href="./css/administer.css" rel="stylesheet" />
 
     <div class="administer-container">
@@ -475,7 +485,7 @@
       <span class="system-admin-text"><span>Profils</span></span>
     </button>
 
-    <button class="administer-admin-button button" *ngIf="isLoggedin === true" (click)="toAdminister()">
+    <button class="administer-admin-button button" *ngIf="isLoggedin === true && userRole ===2" (click)="toAdminister()">
       <span class="administer-text06"><span>Administrēt</span></span>
     </button>
     

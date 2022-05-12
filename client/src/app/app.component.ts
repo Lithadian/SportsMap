@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ThrowStmt } from '@angular/compiler';
+import { AfterViewInit, Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import {
   SocialAuthService,
@@ -66,12 +67,14 @@ export class AppComponent implements OnInit, AfterViewInit {
   isSystemAdminPage: boolean;
   isProfile: boolean;
   isConnectPage: boolean;
+  userRole:any;
 
   title = 'The Sports Map';
   userInfo: userInfo;
   users: any;
   events:any;
   gay:any;
+  Event:Event;
    httpOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'application/json',
@@ -80,7 +83,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   };  
   constructor(private http: HttpClient, 
     private formBuilder: FormBuilder,
-    private socialAuthService: SocialAuthService,){
+    private socialAuthService: SocialAuthService,private zone:NgZone){
     }
     
   ngAfterViewInit(): void {
@@ -100,16 +103,31 @@ export class AppComponent implements OnInit, AfterViewInit {
       });}
   }
   //end Of google map implement
-  profileForm = new FormGroup({
-    firstName: new FormControl(''),
-    lastName: new FormControl(''),
+  createEventForm = new FormGroup({
+    name: new FormControl(''),
+    date: new FormControl(''),
+    type: new FormControl(''),
+    usersMaxCount: new FormControl(''),
+    placeCoordX: new FormControl(''),
+    placeCoordY: new FormControl(''),
+    description: new FormControl(''),
   });
-  onSubmit() {
-    // TODO: Use EventEmitter with form value
-    console.warn(this.profileForm.value);
+  createEvent() {
+    this.Event={
+    Name : this.createEventForm.value.name,
+    Date : this.createEventForm.value.date,
+    Type : this.createEventForm.value.type,
+    EventStatus : 1,
+    UsersMaxCount : this.createEventForm.value.usersMaxCount,
+    PlaceCoordX : this.createEventForm.value.placeCoordX,
+    PlaceCoordY : this.createEventForm.value.placeCoordY,
+    Description : this.createEventForm.value.description,
+    EventAuthor : this.userInfo.UserId,
+    };
+    //todo:create validation function for values
+    this.CreateEventPost();
   }
   ngOnInit() {
-    
     this.isHomePage = true;
     this.loginForm = this.formBuilder.group({
       email: ['', Validators.required],
@@ -119,7 +137,6 @@ export class AppComponent implements OnInit, AfterViewInit {
       this.socialUser = user;
       this.isLoggedin = user != null;
       //if(user != null) this.httpOptions.headers = this.httpOptions.headers.set('Authorization', this.socialUser.authToken) ;
-      console.log(user);
       this.setUserInfo();
     }); 
     this.getUsers();
@@ -140,6 +157,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   };
   setUserInfo(): void{
+    if(this.isLoggedin)
     this.userInfo={
       UserId :this.socialUser.id,
       Name: this.socialUser.firstName,
@@ -150,6 +168,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   };
   logOut(): void {
     this.socialAuthService.signOut();
+    this.userRole = null;
   };
   
   getUsers(){
@@ -161,18 +180,35 @@ export class AppComponent implements OnInit, AfterViewInit {
   };
   loginUser(){
     this.http.post('https://localhost:5001/api/User/LoginUser',this.userInfo,this.httpOptions).subscribe(response => {
-      console.log(response);
+      if(response ==1 || response == 2){
+        this.userRole = response;
+      }
+      else if(response = "User Created") {
+        this.userRole = 1;
+      }
     }, error=>{
       console.log(error);
     })
   };
+  CreateEventPost(){
+
+      this.http.post('https://localhost:5001/api/Event/CreateEvent',this.Event,this.httpOptions).subscribe(response => {
+        this.getEventList();
+      }, error=>{
+        console.log(error);
+      })
+
+    
+  };
   getEventList(){
+    this.zone.run(() => {
+      this.events = this.events || [];
     this.http.get('https://localhost:5001/api/Event/GetEventList').subscribe(response => {
       this.events = response;
-      console.log(response);
     }, error=>{
       console.log(error);
     })
+  });
   };
   //Page navigation
   toHomePage(){

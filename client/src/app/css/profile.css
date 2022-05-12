@@ -367,6 +367,62 @@
   align-self: stretch;
   font-family: Comic Sans MS;
 }
+/* styling profile form */
+.userProfileForm {
+  display: grid;
+  gap: 0.5em;
+  grid-template-areas: 
+  /* "profile-text09 . profile-username-fieldInput . profile-text13"
+  "profile-text10 . profile-name-fieldInput . profile-description-fieldInput"
+  "profile-text11 . profile-surname-fieldInput . "
+  "profile-text12 . profile-email-fieldInput . " */
+  ". . submitButton";
+  grid-template-columns: 1fr 10vw 1fr;
+  margin-top: 30vh;
+  width: 90%;
+}
+
+.userProfileForm label {
+  grid-column: 1;
+}
+.userProfileForm button {
+  grid-column: 3;
+  border-color: #000000;
+  border-width: 5px;
+  margin-right: 1vw;
+  padding-left: 2rem;
+  border-radius: 40px;
+  padding-right: 1rem;
+  flex-direction: row;
+  /* padding-bottom: 1rem; */
+  justify-content: flex-end;
+  background-color: #D9D9D9;
+  font-family: Comic Sans MS;
+}
+
+.userProfileForm button:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.userProfileForm input {
+  grid-column: 2;
+  padding-left: 10px;
+}
+
+.profile-text13 {
+  grid-column: 3;
+}
+
+.profile-description-field {
+  grid-column: 3;
+}
+
+/* .userProfileForm button {
+
+} */
+
+/*  */
 .profile-user-search-container {
   top: 55vh;
   flex: 0 0 auto;
@@ -397,6 +453,7 @@
   align-self: stretch;
   font-family: Comic Sans MS;
   border-radius: 15px;
+  padding-left: 10px;
 }
 .profile-text14 {
   top: 9px;

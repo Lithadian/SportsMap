@@ -167,24 +167,24 @@
             </ul>
           </div>
           <div *ngIf="isLoggedin === true">
-            <form [formGroup]="createEventForm"(ngSubmit)="createEvent()">
+            <form class="createEventForm" [formGroup]="createEventForm"(ngSubmit)="createEvent()">
 
-              <label for="first-name">Event name: </label>
+              <label for="first-name">Pasākuma nosaukums: </label>
               <input id="first-name" type="text" formControlName="name">
             
-              <label for="last-name">Event datums: </label>
+              <label for="last-name">Pasākuma datums: </label>
               <input id="last-name" type="text" formControlName="date">
-              <label for="last-name">Event tips: </label>
+              <label for="last-name">Pasākuma tips: </label>
               <input id="last-name" type="text" formControlName="type">
-              <label for="last-name">Event maksimals cilveku skaits: </label>
+              <label for="last-name">Maksimals cilveku skaits: </label>
               <input id="last-name" type="text" formControlName="usersMaxCount">
-              <label for="last-name">Event x-coord: </label>
+              <label for="last-name">Pasākuma x-koordin.: </label>
               <input id="last-name" type="text" formControlName="placeCoordX">
-              <label for="last-name">Event y-coord: </label>
+              <label for="last-name">Pasākuma y-koordin.: </label>
               <input id="last-name" type="text" formControlName="placeCoordY">
-              <label for="last-name">Event apraksts: </label>
+              <label for="last-name">Pasākuma apraksts: </label>
               <input id="last-name" type="text" formControlName="description">
-              <button type="submit" [disabled]="!createEventForm.valid">Submit</button>
+              <button type="submit" [disabled]="!createEventForm.valid">Organizēt!</button>
             </form>
           </div>
         </div>
@@ -363,7 +363,7 @@
         <div class="profile-block-user">
           <span class="profile-text08">Profils</span>
           <div class="profile-user-own-data-container">
-            <form [formGroup]="userProfileForm"(ngSubmit)="updateProfile()">
+            <form class="userProfileForm" [formGroup]="userProfileForm"(ngSubmit)="updateProfile()">
 
               <div class="profile-username-place">
                 <span class="profile-text09">Lietotājvārds:</span>
@@ -417,7 +417,7 @@
     <div class="connect-container">
       <div class="connect-connect">
         <div class="connect-block-connect">
-          <span class="connect-text08">Profils</span>
+          <span class="connect-text08">Sazināties</span>
           <div class="connect-connect-form">
             <div class="connect-message-type-place">
               <span class="connect-text09">Ziņojuma tips:</span>
@@ -463,7 +463,7 @@
       <span class="home-text"><span>Ienākt/Reģistrēties</span></span>
     </button>
 
-    <button class="home-login-reg-button button" *ngIf="isLoggedin === true" (click)="logOut()">Log Out</button>
+    <button class="home-login-reg-button button" *ngIf="isLoggedin === true" (click)="logOut()">Iziet</button>
 
     <button class="profile-profile-button button" *ngIf="isLoggedin === true" (click)="toProfile(); getUserProfile()">
       <img

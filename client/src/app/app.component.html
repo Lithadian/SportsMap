@@ -363,46 +363,35 @@
         <div class="profile-block-user">
           <span class="profile-text08">Profils</span>
           <div class="profile-user-own-data-container">
-            <div class="profile-username-place">
-              <input
-                type="text"
-                placeholder="placeholder"
-                class="profile-username-field input"
-              />
-              <span class="profile-text09">Lietotājvārds:</span>
-            </div>
-            <div class="profile-name-place">
-              <input
-                type="text"
-                placeholder="placeholder"
-                class="profile-name-field input"
-              />
-              <span class="profile-text10">Vārds:</span>
-            </div>
-            <div class="profile-surname-place">
-              <input
-                type="text"
-                placeholder="placeholder"
-                class="profile-surname-field input"
-              />
-              <span class="profile-text11">Uzvārds:</span>
-            </div>
-            <div class="profile-email-place">
-              <input
-                type="text"
-                placeholder="placeholder"
-                class="profile-email-field input"
-              />
-              <span class="profile-text12">E-pasts:</span>
-            </div>
-            <div class="profile-description-place">
-              <input
-                type="text"
-                placeholder="placeholder"
-                class="profile-description-field input"
-              />
-              <span class="profile-text13">Par sevi:</span>
-            </div>
+            <form [formGroup]="userProfileForm"(ngSubmit)="updateProfile()">
+
+              <div class="profile-username-place">
+                <span class="profile-text09">Lietotājvārds:</span>
+                <input type="text" class="profile-username-field input" formControlName="username" placeholder="{{userProfile.username}}">
+              </div>
+
+              <div class="profile-name-place">
+                <input type="text" class="profile-name-field input" formControlName="name" placeholder="{{userProfile.name}}">
+                <span class="profile-text10">Vārds:</span>
+              </div>
+
+              <div class="profile-surname-place">
+                <input type="text" class="profile-surname-field input" formControlName="surname" placeholder="{{userProfile.surname}}">
+                <span class="profile-text11">Uzvārds:</span>
+              </div>
+
+              <div class="profile-email-place">
+                <input type="text" class="profile-email-field input" formControlName="email" placeholder="{{userProfile.email}}">
+                <span class="profile-text12">E-pasts:</span>
+              </div>
+
+              <div class="profile-description-place">
+                <input type="text" class="profile-description-field input" formControlName="userDescription" placeholder="{{userProfile.userDescription}}">
+                <span class="profile-text13">Par sevi:</span>
+              </div>
+
+              <button type="submit">Submit</button>
+            </form>
           </div>
           <div class="profile-user-search-container">
             <div class="profile-user-search-place">
@@ -476,7 +465,7 @@
 
     <button class="home-login-reg-button button" *ngIf="isLoggedin === true" (click)="logOut()">Log Out</button>
 
-    <button class="profile-profile-button button" *ngIf="isLoggedin === true" (click)="toProfile()">
+    <button class="profile-profile-button button" *ngIf="isLoggedin === true" (click)="toProfile(); getUserProfile()">
       <img
         alt="image"
         src="assets/profileicon-200w.png"

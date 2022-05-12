@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ThrowStmt } from '@angular/compiler';
 import { AfterViewInit, Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -68,12 +68,12 @@ export class AppComponent implements OnInit, AfterViewInit {
   isProfile: boolean;
   isConnectPage: boolean;
   userRole:any;
+  userProfile:any;
 
   title = 'The Sports Map';
   userInfo: userInfo;
   users: any;
   events:any;
-  gay:any;
   Event:Event;
    httpOptions = {
     headers: new HttpHeaders({
@@ -112,6 +112,13 @@ export class AppComponent implements OnInit, AfterViewInit {
     placeCoordY: new FormControl(''),
     description: new FormControl(''),
   });
+  userProfileForm = new FormGroup({
+    username: new FormControl(''),
+    name: new FormControl(''),
+    surname: new FormControl(''),
+    email: new FormControl(''),
+    userDescription: new FormControl(''),
+  });
   createEvent() {
     this.Event={
     Name : this.createEventForm.value.name,
@@ -126,6 +133,14 @@ export class AppComponent implements OnInit, AfterViewInit {
     };
     //todo:create validation function for values
     this.CreateEventPost();
+  }
+  updateProfile(){
+    if(this.userProfileForm.value.name.length>0) this.userProfile.name= this.userProfileForm.value.name;
+    if(this.userProfileForm.value.username.length>0) this.userProfile.username= this.userProfileForm.value.username;
+    if(this.userProfileForm.value.surname.length>0) this.userProfile.surname= this.userProfileForm.value.surname;
+    if(this.userProfileForm.value.email.length>0) this.userProfile.email= this.userProfileForm.value.email;
+    if(this.userProfileForm.value.userDescription.length>0)this.userProfile.userDescription= this.userProfileForm.value.userDescription; 
+    this.updateUserProfile();
   }
   ngOnInit() {
     this.isHomePage = true;
@@ -178,6 +193,23 @@ export class AppComponent implements OnInit, AfterViewInit {
       console.log(error);
     })
   };
+  getUserProfile(){
+    const headers = new HttpHeaders().append('header', 'value');
+    const params = new HttpParams().append('userId', this.userInfo.UserId);
+    this.http.get('https://localhost:5001/api/User/GetUserInfo',{headers, params}).subscribe(response => {
+      this.userProfile = response;
+      console.log(this.userProfile);
+      console.log(this.userProfile.userDescription);
+    }, error=>{
+      console.log(error);
+    })
+  };
+  updateUserProfile(){
+    this.http.post('https://localhost:5001/api/User/UpdateUser',this.userProfile,this.httpOptions).subscribe(response => {
+    }, error=>{
+      console.log(error);
+    })  
+  };
   loginUser(){
     this.http.post('https://localhost:5001/api/User/LoginUser',this.userInfo,this.httpOptions).subscribe(response => {
       if(response ==1 || response == 2){
@@ -196,9 +228,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         this.getEventList();
       }, error=>{
         console.log(error);
-      })
-
-    
+      })    
   };
   getEventList(){
     this.zone.run(() => {

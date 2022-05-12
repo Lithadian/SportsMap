@@ -79,8 +79,6 @@ namespace API.Models
                     .HasMaxLength(10)
                     .IsFixedLength();
 
-                entity.Property(e => e.EventId).ValueGeneratedOnAdd();
-
                 entity.Property(e => e.Type)
                     .HasMaxLength(10)
                     .IsUnicode(false);
@@ -93,20 +91,18 @@ namespace API.Models
 
             modelBuilder.Entity<EventUser>(entity =>
             {
-                entity.HasNoKey();
-
                 entity.Property(e => e.EventId).HasColumnName("EventID");
 
                 entity.Property(e => e.UserId).HasColumnName("UserID");
 
                 entity.HasOne(d => d.Event)
-                    .WithMany()
+                    .WithMany(p => p.EventUsers)
                     .HasForeignKey(d => d.EventId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_EventUsers_AppUser1");
 
                 entity.HasOne(d => d.User)
-                    .WithMany()
+                    .WithMany(p => p.EventUsers)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_EventUsers_AppUser");

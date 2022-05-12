@@ -7,6 +7,7 @@ namespace API.Models
     {
         public AppUser()
         {
+            EventUsers = new HashSet<EventUser>();
             Events = new HashSet<Event>();
         }
 
@@ -19,6 +20,7 @@ namespace API.Models
         public string UserDescription { get; set; }
         public string Username { get; set; }
 
+        public virtual ICollection<EventUser> EventUsers { get; set; }
         public virtual ICollection<Event> Events { get; set; }
     }
 }

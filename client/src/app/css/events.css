@@ -226,6 +226,48 @@
   margin-right: 2vw;
   padding-right: 1.5rem;
 }
+/* styling event creation form */
+.createEventForm {
+  display: grid;
+  gap: 0.5em;
+  grid-template-areas: 
+  "first-nameLabel . first-nameInput .  . last-nameLabel . last-nameInput";
+  grid-template-columns: 14vw 1em 35vw;
+  margin-top: 65vh;
+  width: 80%;
+}
+
+.createEventForm label {
+  grid-column: 1;
+  font-family: Comic Sans MS;
+}
+.createEventForm button {
+  grid-column: 3;
+  border-color: #000000;
+  border-width: 5px;
+  /* margin-right: 1vw; */
+  padding-left: 2rem;
+  border-radius: 40px;
+  padding-right: 1rem;
+  flex-direction: row;
+  /* padding-bottom: 1rem; */
+  justify-content: flex-end;
+  background-color: #D9D9D9;
+  font-family: Comic Sans MS;
+}
+
+.createEventForm button:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.createEventForm input {
+  grid-column: 3;
+  font-family: Comic Sans MS;
+  border-radius: 15px;
+  padding-left: 10px;
+}
+/*  */
 .events-footer {
   left: 0px;
   width: 100%;

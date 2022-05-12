@@ -247,7 +247,7 @@
 .connect-message-type-select {
   top: 0px;
   /* right: -1.5vw; */
-  left: 11vw;
+  /* left: 11vw; */
   width: 30vw;
   bottom: 0px;
   margin: auto;
@@ -255,6 +255,7 @@
   border-color: #000000;
   border-width: 3px;
   border-radius: 10px;
+  margin-left: 150px;
 }
 .connect-message-content-place {
   flex: 0 0 auto;
@@ -271,14 +272,17 @@
 }
 .connect-message-content-field {
   top: 0px;
-  right: 22vw;
-  width: 65%;
+  /* right: 22vw; */
+  /* width: 65%; */
+  width: 60vw;
   height: 221px;
   position: absolute;
   align-self: stretch;
   font-family: Comic Sans MS;
   border-width: 3px;
   border-radius: 15px;
+  margin-left: 150px;
+  margin-right: 30px;
 }
 .connect-text10 {
   top: 9px;

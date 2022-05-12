@@ -144,7 +144,16 @@
           <span class="map-text08">Karte</span>
           <div class="map-event-list-container">
             <ul class="map-ul list">
-              <li class="list-item" *ngFor="let event of events"><span>{{event.name}}</span></li>
+              <!-- <li class="list-item" *ngFor="let event of events"><span>{{event.name}}</span></li> -->
+              <li class="eventMapCardListItem" *ngFor="let event of events">
+                <div class="eventMapCard">
+                  <button class="eventMapCardButton" (click)="showOnMap()" (dblclick)="toEventDescription()">
+                    <span class="eventMapName">{{event.name}}<br></span>
+                    <span class="eventMapParicipants">strēšana&nbsp;|&nbsp;</span>
+                    <span class="eventMapDate">{{removeT(event.date)}}</span>
+                  </button>
+                </div>
+              </li>
             </ul>
           </div>
           <div class="map-map-container" #mapElement (dblclick)="renderMap()"></div>

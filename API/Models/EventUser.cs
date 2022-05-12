@@ -7,6 +7,7 @@ namespace API.Models
     {
         public int EventId { get; set; }
         public int UserId { get; set; }
+        public int Id { get; set; }
 
         public virtual Event Event { get; set; }
         public virtual AppUser User { get; set; }

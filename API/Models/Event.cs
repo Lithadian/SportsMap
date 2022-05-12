@@ -5,6 +5,11 @@ namespace API.Models
 {
     public partial class Event
     {
+        public Event()
+        {
+            EventUsers = new HashSet<EventUser>();
+        }
+
         public int EventId { get; set; }
         public string Name { get; set; }
         public DateTime? Date { get; set; }
@@ -17,5 +22,6 @@ namespace API.Models
         public int? EventAuthor { get; set; }
 
         public virtual AppUser EventAuthorNavigation { get; set; }
+        public virtual ICollection<EventUser> EventUsers { get; set; }
     }
 }

@@ -171,8 +171,21 @@
           <span class="events-text08">Pasākumi</span>
           <div class="events-full-event-list-container">
             <ul class="events-ul list">
-              
+              <!-- <li class="list-item" *ngFor="let event of events"><span>{{event.name}}</span></li> -->
+              <li class="eventEventCardListItem" *ngFor="let event of events;let i=index">
+                <div class="eventEventCard">
+                  <button class="eventEventCardButton" (click)="selectEvent(event)" [ngStyle]="{'background-color': (selectedEvent==event) ? '#73c7af' : '#ffffff'}">
+                    <span class="eventEventName">Pasākuma nosaukums:&nbsp;{{event.name}}&nbsp;&nbsp;&nbsp;|&nbsp;</span>
+                    <span class="eventEventAuthor">Autors:&nbsp;{{event.eventAuthor}}<br></span>
+                    <span class="eventEventType">Pasākuma tips:&nbsp;{{event.type}}&nbsp;&nbsp;&nbsp;|&nbsp;</span>
+                    <span class="eventEventParicipants">Dalībnieki:&nbsp;{{eventMapParticipants[i].participantsCount}}/{{event.usersMaxCount}}<br></span>
+                    <span class="eventEventDate">Pasākuma norises datums, laiks:&nbsp;{{removeT(event.date)}}<br></span>
+                    <span class="eventEventDescription">Pasākuma apraksts:&nbsp;{{event.description}}</span>
+                  </button>
+                </div>
+              </li>
             </ul>
+            <button class="eventEventParticipateButton" (click)="eventParticipate(event)" *ngIf="selectedEvent!=null">Piedalīties!</button>
           </div>
           <div *ngIf="isLoggedin === true">
             <form class="createEventForm" [formGroup]="createEventForm"(ngSubmit)="createEvent()">

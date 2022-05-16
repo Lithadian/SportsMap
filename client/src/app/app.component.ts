@@ -69,6 +69,8 @@ export class AppComponent implements OnInit, AfterViewInit {
   userRole:any;
   userProfile:any;
   eventMapParticipants:any;
+  selectedEvent:any;
+
   title = 'The Sports Map';
   userInfo: userInfo;
   users: any;
@@ -256,6 +258,10 @@ export class AppComponent implements OnInit, AfterViewInit {
     }, error=>{
       console.log(error);
     }) 
+  };
+
+  selectEvent(event:any){
+    this.selectedEvent = event;
   };
 
   removeT(input: string) {

@@ -145,11 +145,11 @@
           <div class="map-event-list-container">
             <ul class="map-ul list">
               <!-- <li class="list-item" *ngFor="let event of events"><span>{{event.name}}</span></li> -->
-              <li class="eventMapCardListItem" *ngFor="let event of events">
+              <li class="eventMapCardListItem" *ngFor="let event of events;let i=index">
                 <div class="eventMapCard">
-                  <button class="eventMapCardButton" (click)="showOnMap()" (dblclick)="toEventDescription()">
+                  <button class="eventMapCardButton" (click)="showOnMap(event)" (dblclick)="toEventDescription()">
                     <span class="eventMapName">{{event.name}}<br></span>
-                    <span class="eventMapParicipants">strēšana&nbsp;|&nbsp;</span>
+                    <span class="eventMapParicipants">{{eventMapParticipants[i].participantsCount}}/{{event.usersMaxCount}}&nbsp;| &nbsp;</span>
                     <span class="eventMapDate">{{removeT(event.date)}}</span>
                   </button>
                 </div>
@@ -171,8 +171,7 @@
           <span class="events-text08">Pasākumi</span>
           <div class="events-full-event-list-container">
             <ul class="events-ul list">
-              <li class="list-item"*ngFor="let event of events"><span>{{event.name}}</span></li>
-
+              
             </ul>
           </div>
           <div *ngIf="isLoggedin === true">
@@ -472,7 +471,7 @@
       <span class="home-text"><span>Ienākt/Reģistrēties</span></span>
     </button>
 
-    <button class="home-login-reg-button button" *ngIf="isLoggedin === true" (click)="logOut()">Iziet</button>
+    <button class="home-login-reg-button button" *ngIf="isLoggedin === true" (click)="logOut(); toHomePage()">Iziet</button>
 
     <button class="profile-profile-button button" *ngIf="isLoggedin === true" (click)="toProfile(); getUserProfile()">
       <img
@@ -488,7 +487,7 @@
     </button>
     
 
-    <button class="home-map-button button" (click)="toMapPage()">
+    <button class="home-map-button button" (click)="toMapPage();">
       <span class="home-text02"><span>Karte</span></span>
     </button>
 

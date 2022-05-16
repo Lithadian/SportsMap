@@ -11,7 +11,6 @@ import {
 import { GoogleLoginProvider } from 'angularx-social-login';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-
 @NgModule({
   declarations: [
     AppComponent,

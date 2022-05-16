@@ -8,7 +8,6 @@ import {
   SocialUser,
 } from 'angularx-social-login';
 
-
 declare const google: any;
 class userInfo{
   UserId:string;
@@ -50,7 +49,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   @ViewChild('mapElement') mapElement:any;
   @ViewChild('username') usernameElement: any;
 
-
+  
   map:any;
   
 
@@ -69,7 +68,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   isConnectPage: boolean;
   userRole:any;
   userProfile:any;
-
+  eventMapParticipants:any;
   title = 'The Sports Map';
   userInfo: userInfo;
   users: any;
@@ -102,6 +101,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         title: this.events[i].name
       });}
   }
+  
   //end Of google map implement
   createEventForm = new FormGroup({
     name: new FormControl(''),
@@ -119,6 +119,9 @@ export class AppComponent implements OnInit, AfterViewInit {
     email: new FormControl(''),
     userDescription: new FormControl(''),
   });
+  
+
+
   createEvent() {
     this.Event={
     Name : this.createEventForm.value.name,
@@ -152,7 +155,10 @@ export class AppComponent implements OnInit, AfterViewInit {
       this.socialUser = user;
       this.isLoggedin = user != null;
       //if(user != null) this.httpOptions.headers = this.httpOptions.headers.set('Authorization', this.socialUser.authToken) ;
-      this.setUserInfo();
+      if(this.isLoggedin){
+        this.setUserInfo();
+        this.loginUser();
+      }
     }); 
     this.getUsers();
     this.getEventList();
@@ -232,16 +238,29 @@ export class AppComponent implements OnInit, AfterViewInit {
   };
   getEventList(){
     this.zone.run(() => {
-      this.events = this.events || [];
+      this.events = this.events;
     this.http.get('https://localhost:5001/api/Event/GetEventList').subscribe(response => {
       this.events = response;
+      this.getEventParticipants();
     }, error=>{
       console.log(error);
     })
   });
   };
+  getEventParticipants(){
+    this.http.post('https://localhost:5001/api/Event/GetEventParticipants',this.events,this.httpOptions).subscribe(response => {
+      console.log(response);
+      this.eventMapParticipants = response;
+      console.log(this.eventMapParticipants[1].participantsCount);
+      
+    }, error=>{
+      console.log(error);
+    }) 
+  };
+
   removeT(input: string) {
     return input.replace('T', ' ');
+
   };
   //Page navigation
   toHomePage(){
@@ -343,10 +362,23 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.isProfile=false;
     this.isConnectPage=true;
   }
+
   // map page functions
-  showOnMap() {
+  showOnMap(event:any) {
+    this.events
+    this.map = new google.maps.Map(this.mapElement.nativeElement, {
+      center:{ lat: event.placeCoordX , lng: event.placeCoordX},
+      zoom: 8,
+    });
+    var i;
+    for (i = 0; i < this.events.length; i++) {  
+      var marker = new google.maps.Marker({
+        position: new google.maps.LatLng(this.events[i].placeCoordX, this.events[i].placeCoordY),
+        draggable: false,
+        map: this.map,
+        title: this.events[i].name
+      });}
   }
   toEventDescription() {
   }
 }
-

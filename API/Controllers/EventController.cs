@@ -1,7 +1,8 @@
 ﻿using API.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 namespace API.Controllers
 {
     [Route("api/[controller]")]
@@ -92,11 +93,16 @@ namespace API.Controllers
 
         }
 
-        [HttpGet("GetEventParticipants")]
-        public async Task<List<EventUser>> GetEventParticipants(int eventId)
+        [HttpPost("GetEventParticipants")]
+        public async Task<List<EventParticipants>> GetEventParticipants(List<Event> eventlist)
         {
-            var Users = from x in _context.EventUsers where x.EventId == eventId select x;
-            return Users.ToList();
+            var listParticipats = new List<EventParticipants>();
+            foreach (var ev in eventlist) 
+            {
+                listParticipats.Add(new EventParticipants { ParticipantsCount = _context.EventUsers.Include(e => e.User).Where(x => x.EventId == ev.EventId).Count(),EventId = ev.EventId });
+            }
+            
+            return listParticipats;
         }
     }
 }

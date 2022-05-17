@@ -15,6 +15,11 @@ class userInfo{
   Surname:string;
   Email:string;
 }
+class eventParticipant{
+  EventId:any;
+  UserId:string;
+}
+
 class Event{
   Name:string;
   Date:Date;
@@ -52,7 +57,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   
   map:any;
   
-
+  eventParticipant:eventParticipant;
   loginForm!: FormGroup;
   socialUser!: SocialUser;
   isLoggedin?: boolean;
@@ -70,6 +75,22 @@ export class AppComponent implements OnInit, AfterViewInit {
   userProfile:any;
   eventMapParticipants:any;
   selectedEvent:any;
+
+  paricipated:boolean;
+  
+  checkParticipation():boolean{
+    var a=false;
+    if(this.selectedEvent != null){
+      this.eventMapParticipants.forEach(element => {
+        if(element.eventId == this.selectedEvent.eventId){
+          if(element.participants.includes(this.userProfile.userId)){
+            a=true;
+          }
+        }
+      });
+    }
+    return a;
+  };
 
   title = 'The Sports Map';
   userInfo: userInfo;
@@ -206,8 +227,6 @@ export class AppComponent implements OnInit, AfterViewInit {
     const params = new HttpParams().append('userId', this.userInfo.UserId);
     this.http.get('https://localhost:5001/api/User/GetUserInfo',{headers, params}).subscribe(response => {
       this.userProfile = response;
-      console.log(this.userProfile);
-      console.log(this.userProfile.userDescription);
     }, error=>{
       console.log(error);
     })
@@ -243,6 +262,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       this.events = this.events;
     this.http.get('https://localhost:5001/api/Event/GetEventList').subscribe(response => {
       this.events = response;
+      //this.getEventParticipantsCount();
       this.getEventParticipants();
     }, error=>{
       console.log(error);
@@ -251,17 +271,28 @@ export class AppComponent implements OnInit, AfterViewInit {
   };
   getEventParticipants(){
     this.http.post('https://localhost:5001/api/Event/GetEventParticipants',this.events,this.httpOptions).subscribe(response => {
-      console.log(response);
-      this.eventMapParticipants = response;
-      console.log(this.eventMapParticipants[1].participantsCount);
-      
+      this.eventMapParticipants = response;            
     }, error=>{
       console.log(error);
     }) 
   };
+  eventParticipate(){
+    console.log(this.selectedEvent.eventId);
+    this.eventParticipant = {
+      EventId : this.selectedEvent.eventId,
+      UserId: this.userInfo.UserId
+    }
+    console.log(this.eventParticipant);
+    this.http.post('https://localhost:5001/api/Event/JoinEvent',this.eventParticipant,this.httpOptions).subscribe(response => { 
+      console.log(response);
+    }, error=>{
+      console.log(error);
+    }) 
+  }
 
   selectEvent(event:any){
     this.selectedEvent = event;
+    this.paricipated = this.checkParticipation();
   };
 
   removeT(input: string) {
@@ -385,6 +416,8 @@ export class AppComponent implements OnInit, AfterViewInit {
         title: this.events[i].name
       });}
   }
-  toEventDescription() {
+  toEventDescription(event:any) {
+    this.toEventsPage();
+    this.selectedEvent = event;
   }
 }

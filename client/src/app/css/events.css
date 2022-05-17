@@ -220,12 +220,56 @@
   align-items: flex-start;
   justify-content: flex-start;
 }
+
+/* event cards on events page */
 .events-ul {
   height: 419px;
   margin-left: 2vw;
   margin-right: 2vw;
   padding-right: 1.5rem;
+  overflow: auto;
+
+  list-style-type: none;
 }
+
+.eventEventCardListItem {
+  margin-bottom: 10px;
+}
+/* .eventMapName {
+  margin-bottom: 2px;
+} */
+
+.eventEventCardButton {
+  width: 60vw;
+}
+
+.eventEventParticipateButton {
+  width: 10vw;
+  height: 7vh;
+  margin-top: 17vh;
+  margin-right: 1vw;
+  margin-left: 1vw;
+  transition: 0.3s;
+  padding-top: 1rem;
+  border-color: #000000;
+  border-width: 5px;
+  padding-left: 0.5rem;
+  border-radius: 40px;
+  padding-right: 0.5rem;
+  /* flex-direction: row; */
+  padding-bottom: 1rem;
+  /* justify-content: flex-end; */
+  background-color: #D9D9D9;
+  font-family: Comic Sans MS;
+}
+
+.eventEventParticipateButton:hover {
+  cursor: pointer;
+  text-decoration: underline;
+  /* background-color: #D9D9D9; */
+}
+/*  */
+
 /* styling event creation form */
 .createEventForm {
   display: grid;
@@ -233,7 +277,7 @@
   grid-template-areas: 
   "first-nameLabel . first-nameInput .  . last-nameLabel . last-nameInput";
   grid-template-columns: 14vw 1em 35vw;
-  margin-top: 65vh;
+  margin-top: 78vh;
   width: 80%;
 }
 

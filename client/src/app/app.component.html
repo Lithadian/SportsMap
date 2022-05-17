@@ -144,7 +144,16 @@
           <span class="map-text08">Karte</span>
           <div class="map-event-list-container">
             <ul class="map-ul list">
-              <li class="list-item" *ngFor="let event of events"><span>{{event.name}}</span></li>
+              <!-- <li class="list-item" *ngFor="let event of events"><span>{{event.name}}</span></li> -->
+              <li class="eventMapCardListItem" *ngFor="let event of events;let i=index">
+                <div class="eventMapCard">
+                  <button class="eventMapCardButton" (click)="showOnMap(event)" (dblclick)="toEventDescription(event)">
+                    <span class="eventMapName">{{event.name}}<br></span>
+                    <span class="eventMapParicipants">{{eventMapParticipants[i].participantsCount}}/{{event.usersMaxCount}}&nbsp;| &nbsp;</span>
+                    <span class="eventMapDate">{{removeT(event.date)}}</span>
+                  </button>
+                </div>
+              </li>
             </ul>
           </div>
           <div class="map-map-container" #mapElement (dblclick)="renderMap()"></div>
@@ -162,9 +171,24 @@
           <span class="events-text08">Pasākumi</span>
           <div class="events-full-event-list-container">
             <ul class="events-ul list">
-              <li class="list-item"*ngFor="let event of events"><span>{{event.name}}</span></li>
-
+              <!-- <li class="list-item" *ngFor="let event of events"><span>{{event.name}}</span></li> -->
+              <li class="eventEventCardListItem" *ngFor="let event of events;let i=index">
+                <div class="eventEventCard">
+                  <button class="eventEventCardButton" (click)="selectEvent(event)" [ngStyle]="{'background-color': (selectedEvent==event) ? '#73c7af' : '#ffffff'}">
+                    <span class="eventEventName">Pasākuma nosaukums:&nbsp;{{event.name}}&nbsp;&nbsp;&nbsp;|&nbsp;</span>
+                    <span class="eventEventAuthor">Autors:&nbsp;{{event.eventAuthor}}<br></span>
+                    <span class="eventEventType">Pasākuma tips:&nbsp;{{event.type}}&nbsp;&nbsp;&nbsp;|&nbsp;</span>
+                    <span class="eventEventParicipants">Dalībnieki:&nbsp;{{eventMapParticipants[i].participants.length}}/{{event.usersMaxCount}}<br></span>
+                    <span class="eventEventDate">Pasākuma norises datums, laiks:&nbsp;{{removeT(event.date)}}<br></span>
+                    <span class="eventEventDescription">Pasākuma apraksts:&nbsp;{{event.description}}</span>
+                  </button>
+                </div>
+              </li>
             </ul>
+            <button class="eventEventParticipateButton" (click)="eventParticipate()" *ngIf="selectedEvent!=null">
+              <div *ngIf="paricipated === false">Piedalīties!</div>
+              <div *ngIf="paricipated === true">Nepiedalīties!</div>
+            </button>
           </div>
           <div *ngIf="isLoggedin === true">
             <form class="createEventForm" [formGroup]="createEventForm"(ngSubmit)="createEvent()">
@@ -463,9 +487,9 @@
       <span class="home-text"><span>Ienākt/Reģistrēties</span></span>
     </button>
 
-    <button class="home-login-reg-button button" *ngIf="isLoggedin === true" (click)="logOut()">Iziet</button>
+    <button class="home-login-reg-button button" *ngIf="isLoggedin === true" (click)="logOut(); toHomePage()">Iziet</button>
 
-    <button class="profile-profile-button button" *ngIf="isLoggedin === true" (click)="toProfile(); getUserProfile()">
+    <button class="profile-profile-button button" *ngIf="isLoggedin === true" (click)="toProfile();getUserProfile()">
       <img
         alt="image"
         src="assets/profileicon-200w.png"
@@ -479,11 +503,11 @@
     </button>
     
 
-    <button class="home-map-button button" (click)="toMapPage()">
+    <button class="home-map-button button" (click)="toMapPage();">
       <span class="home-text02"><span>Karte</span></span>
     </button>
 
-    <button class="home-event-button button"(click)="toEventsPage()">
+    <button class="home-event-button button"(click)="toEventsPage(); getUserProfile()">
       <span class="home-text04"><span>Pasākumi</span></span>
     </button>
 

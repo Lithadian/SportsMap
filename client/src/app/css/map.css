@@ -220,12 +220,29 @@
   align-items: flex-start;
   justify-content: flex-start;
 }
+
+/* event cards on map page */
 .map-ul {
-  height: 419px;
+  height: 81vh;
   margin-left: 2vw;
   margin-right: 2vw;
   padding-right: 1.5rem;
+  overflow: auto;
+
+  list-style-type: none;
 }
+
+.eventMapCardListItem {
+  margin-bottom: 10px;
+}
+/* .eventMapName {
+  margin-bottom: 2px;
+} */
+
+.eventMapCardButton {
+  width: 105%;
+}
+/*  */
 .map-map-container {
   top: 0px;
   flex: 0 0 auto;

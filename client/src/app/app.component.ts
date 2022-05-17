@@ -8,7 +8,6 @@ import {
   SocialUser,
 } from 'angularx-social-login';
 
-
 declare const google: any;
 class userInfo{
   UserId:string;
@@ -16,6 +15,11 @@ class userInfo{
   Surname:string;
   Email:string;
 }
+class eventParticipant{
+  EventId:any;
+  UserId:string;
+}
+
 class Event{
   Name:string;
   Date:Date;
@@ -50,10 +54,10 @@ export class AppComponent implements OnInit, AfterViewInit {
   @ViewChild('mapElement') mapElement:any;
   @ViewChild('username') usernameElement: any;
 
-
+  
   map:any;
   
-
+  eventParticipant:eventParticipant;
   loginForm!: FormGroup;
   socialUser!: SocialUser;
   isLoggedin?: boolean;
@@ -69,6 +73,24 @@ export class AppComponent implements OnInit, AfterViewInit {
   isConnectPage: boolean;
   userRole:any;
   userProfile:any;
+  eventMapParticipants:any;
+  selectedEvent:any;
+
+  paricipated:boolean;
+  
+  checkParticipation():boolean{
+    var a=false;
+    if(this.selectedEvent != null){
+      this.eventMapParticipants.forEach(element => {
+        if(element.eventId == this.selectedEvent.eventId){
+          if(element.participants.includes(this.userProfile.userId)){
+            a=true;
+          }
+        }
+      });
+    }
+    return a;
+  };
 
   title = 'The Sports Map';
   userInfo: userInfo;
@@ -102,6 +124,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         title: this.events[i].name
       });}
   }
+  
   //end Of google map implement
   createEventForm = new FormGroup({
     name: new FormControl(''),
@@ -119,6 +142,9 @@ export class AppComponent implements OnInit, AfterViewInit {
     email: new FormControl(''),
     userDescription: new FormControl(''),
   });
+  
+
+
   createEvent() {
     this.Event={
     Name : this.createEventForm.value.name,
@@ -152,7 +178,10 @@ export class AppComponent implements OnInit, AfterViewInit {
       this.socialUser = user;
       this.isLoggedin = user != null;
       //if(user != null) this.httpOptions.headers = this.httpOptions.headers.set('Authorization', this.socialUser.authToken) ;
-      this.setUserInfo();
+      if(this.isLoggedin){
+        this.setUserInfo();
+        this.loginUser();
+      }
     }); 
     this.getUsers();
     this.getEventList();
@@ -198,8 +227,6 @@ export class AppComponent implements OnInit, AfterViewInit {
     const params = new HttpParams().append('userId', this.userInfo.UserId);
     this.http.get('https://localhost:5001/api/User/GetUserInfo',{headers, params}).subscribe(response => {
       this.userProfile = response;
-      console.log(this.userProfile);
-      console.log(this.userProfile.userDescription);
     }, error=>{
       console.log(error);
     })
@@ -232,13 +259,45 @@ export class AppComponent implements OnInit, AfterViewInit {
   };
   getEventList(){
     this.zone.run(() => {
-      this.events = this.events || [];
+      this.events = this.events;
     this.http.get('https://localhost:5001/api/Event/GetEventList').subscribe(response => {
       this.events = response;
+      //this.getEventParticipantsCount();
+      this.getEventParticipants();
     }, error=>{
       console.log(error);
     })
   });
+  };
+  getEventParticipants(){
+    this.http.post('https://localhost:5001/api/Event/GetEventParticipants',this.events,this.httpOptions).subscribe(response => {
+      this.eventMapParticipants = response;            
+    }, error=>{
+      console.log(error);
+    }) 
+  };
+  eventParticipate(){
+    console.log(this.selectedEvent.eventId);
+    this.eventParticipant = {
+      EventId : this.selectedEvent.eventId,
+      UserId: this.userInfo.UserId
+    }
+    console.log(this.eventParticipant);
+    this.http.post('https://localhost:5001/api/Event/JoinEvent',this.eventParticipant,this.httpOptions).subscribe(response => { 
+      console.log(response);
+    }, error=>{
+      console.log(error);
+    }) 
+  }
+
+  selectEvent(event:any){
+    this.selectedEvent = event;
+    this.paricipated = this.checkParticipation();
+  };
+
+  removeT(input: string) {
+    return input.replace('T', ' ');
+
   };
   //Page navigation
   toHomePage(){
@@ -340,5 +399,25 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.isProfile=false;
     this.isConnectPage=true;
   }
-}
 
+  // map page functions
+  showOnMap(event:any) {
+    this.events
+    this.map = new google.maps.Map(this.mapElement.nativeElement, {
+      center:{ lat: event.placeCoordX , lng: event.placeCoordX},
+      zoom: 8,
+    });
+    var i;
+    for (i = 0; i < this.events.length; i++) {  
+      var marker = new google.maps.Marker({
+        position: new google.maps.LatLng(this.events[i].placeCoordX, this.events[i].placeCoordY),
+        draggable: false,
+        map: this.map,
+        title: this.events[i].name
+      });}
+  }
+  toEventDescription(event:any) {
+    this.toEventsPage();
+    this.selectedEvent = event;
+  }
+}

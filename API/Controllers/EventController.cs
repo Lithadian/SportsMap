@@ -1,7 +1,8 @@
 ﻿using API.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 namespace API.Controllers
 {
     [Route("api/[controller]")]
@@ -58,17 +59,17 @@ namespace API.Controllers
         }
 
         [HttpPost("JoinEvent")]
-        public async Task<ActionResult> PostJoinEvent(string eventId, string userId)
+        public async Task<ActionResult> PostJoinEvent(EventParticipant eventParticipant)
         {
 
             try
             {
-                var _eventId = int.Parse(eventId);
-                var _userId = int.Parse(userId.Remove(7));
-                var result = from x in _context.EventUsers where x.EventId == _eventId && x.UserId == _userId select x;
+                var _eventId = eventParticipant.EventId;
+                var _userId = int.Parse(eventParticipant.UserId.Remove(7));
+                var result = _context.EventUsers.Where(x => x.EventId == _eventId && x.UserId == _userId);
                 if (result.Any())
                 {
-                    _context.Remove(result);
+                    _context.RemoveRange(result);
                     _context.SaveChanges();
                     return Ok("{}");
                 }
@@ -91,12 +92,18 @@ namespace API.Controllers
             return BadRequest("Unknown error");
 
         }
-
-        [HttpGet("GetEventParticipants")]
-        public async Task<List<EventUser>> GetEventParticipants(int eventId)
+        [HttpPost("GetEventParticipants")]
+        public async Task<List<EventParticipantsId>> GetEventParticipants(List<Event> eventlist)
         {
-            var Users = from x in _context.EventUsers where x.EventId == eventId select x;
-            return Users.ToList();
+            var listParticipats = new List<EventParticipantsId>();
+            foreach (var ev in eventlist)
+            {
+                var participantList = _context.EventUsers.Where(x => x.EventId == ev.EventId).Select(x => x.UserId).ToList();
+                //_context.EventUsers.Include(e => e.UserId).Where(x => x.EventId == ev.EventId).ToList()
+                listParticipats.Add(new EventParticipantsId { Participants = participantList, EventId = ev.EventId });
+            }
+
+            return listParticipats;
         }
     }
 }

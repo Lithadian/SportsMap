@@ -149,7 +149,7 @@
                 <div class="eventMapCard">
                   <button class="eventMapCardButton" (click)="showOnMap(event)" (dblclick)="toEventDescription(event)">
                     <span class="eventMapName">{{event.name}}<br></span>
-                    <span class="eventMapParicipants">{{eventMapParticipants[i].participantsCount}}/{{event.usersMaxCount}}&nbsp;| &nbsp;</span>
+                    <span class="eventMapParicipants">{{eventMapParticipants[i].participants.length}}/{{event.usersMaxCount}}&nbsp;| &nbsp;</span>
                     <span class="eventMapDate">{{removeT(event.date)}}</span>
                   </button>
                 </div>
@@ -176,7 +176,7 @@
                 <div class="eventEventCard">
                   <button class="eventEventCardButton" (click)="selectEvent(event)" [ngStyle]="{'background-color': (selectedEvent==event) ? '#73c7af' : '#ffffff'}">
                     <span class="eventEventName">Pasākuma nosaukums:&nbsp;{{event.name}}&nbsp;&nbsp;&nbsp;|&nbsp;</span>
-                    <span class="eventEventAuthor">Autors:&nbsp;{{event.eventAuthor}}<br></span>
+                    <span class="eventEventAuthor">Autors:&nbsp;{{eventMapParticipants[i].username}}<br></span>
                     <span class="eventEventType">Pasākuma tips:&nbsp;{{event.type}}&nbsp;&nbsp;&nbsp;|&nbsp;</span>
                     <span class="eventEventParicipants">Dalībnieki:&nbsp;{{eventMapParticipants[i].participants.length}}/{{event.usersMaxCount}}<br></span>
                     <span class="eventEventDate">Pasākuma norises datums, laiks:&nbsp;{{removeT(event.date)}}<br></span>
@@ -185,12 +185,12 @@
                 </div>
               </li>
             </ul>
-            <button class="eventEventParticipateButton" (click)="eventParticipate()" *ngIf="selectedEvent!=null">
+            <button class="eventEventParticipateButton" (click)="eventParticipate()" *ngIf="selectedEvent!=null && isLoggedin === true" >
               <div *ngIf="paricipated === false">Piedalīties!</div>
               <div *ngIf="paricipated === true">Nepiedalīties!</div>
             </button>
           </div>
-          <div *ngIf="isLoggedin === true">
+          <div *ngIf="isLoggedin === true && userRole !=3">
             <form class="createEventForm" [formGroup]="createEventForm"(ngSubmit)="createEvent()">
 
               <label for="first-name">Pasākuma nosaukums: </label>
@@ -201,11 +201,11 @@
               <label for="last-name">Pasākuma tips: </label>
               <input id="last-name" type="text" formControlName="type">
               <label for="last-name">Maksimals cilveku skaits: </label>
-              <input id="last-name" type="text" formControlName="usersMaxCount">
+              <input id="last-name" type="number" formControlName="usersMaxCount">
               <label for="last-name">Pasākuma x-koordin.: </label>
-              <input id="last-name" type="text" formControlName="placeCoordX">
+              <input id="last-name" type="number" formControlName="placeCoordX">
               <label for="last-name">Pasākuma y-koordin.: </label>
-              <input id="last-name" type="text" formControlName="placeCoordY">
+              <input id="last-name" type="number" formControlName="placeCoordY">
               <label for="last-name">Pasākuma apraksts: </label>
               <input id="last-name" type="text" formControlName="description">
               <button type="submit" [disabled]="!createEventForm.valid">Organizēt!</button>
@@ -258,26 +258,36 @@
           <div class="user-admin-container1">
             <button class="user-admin-del-selected-button button">
               <span class="user-admin-text09">
-                <span class="user-admin-text10">Dzēst atzīmētos</span>
+                <span class="user-admin-text10">Dzēst atzīmēto</span>
               </span>
             </button>
-            <button class="user-admin-ban-publish-button button">
+            <button class="user-admin-ban-publish-button button"(click)="blockPublishing()">
               <span class="user-admin-text11">
                 <span class="user-admin-text12">Liegt publicēt</span>
               </span>
             </button>
             <button class="user-admin-edit-field-button button">
               <span class="user-admin-text13">
-                <span class="user-admin-text14">Rediģēt lauku</span>
+                <span class="user-admin-text14">Rediģēt lietotāju</span>
               </span>
             </button>
           </div>
           <div class="user-admin-user-table-container">
-            <ul class="user-admin-ul list">
-              <li class="list-item"><span>Text</span></li>
-              <li class="list-item"><span>Text</span></li>
-              <li class="list-item"><span>Text</span></li>
-            </ul>
+              <ul class="user-admin-ul list">
+                <!-- <li class="list-item" *ngFor="let event of events"><span>{{event.name}}</span></li> -->
+                <li class="eventEventCardListItem" *ngFor="let user of users;let i=index">
+                  <div class="eventEventCard">
+                    <button class="eventEventCardButton" (click)="selectUser(user)" [ngStyle]="{'background-color': (selectedUser==user) ? '#73c7af' : '#ffffff'}">
+                      <span class="eventEventName">Lietotaja ID:&nbsp;{{user.userId}}&nbsp;&nbsp;&nbsp;|&nbsp;</span>
+                      <span class="eventEventAuthor">Lietotaja vārds:&nbsp;{{user.name}}<br></span>
+                      <span class="eventEventType">Lietotaja uzvārds:&nbsp;{{user.surname}}&nbsp;&nbsp;&nbsp;|&nbsp;</span>
+                      <span class="eventEventParicipants">Lietotaja e-pasts:&nbsp;{{user.email}}<br></span>
+                      <span class="eventEventDate">Lietotaja loma:&nbsp;{{user.role}}<br></span>
+                      <span class="eventEventDescription">Lietotājvārds:&nbsp;{{user.username}}</span>
+                    </button>
+                  </div>
+                </li>
+              </ul>
           </div>
         </div>
       </div>
@@ -410,11 +420,11 @@
               </div>
 
               <div class="profile-description-place">
-                <input type="text" class="profile-description-field input" formControlName="userDescription" placeholder="{{userProfile.userDescription}}">
+                <textarea type="text" class="profile-description-field input" formControlName="userDescription" placeholder="{{userProfile.userDescription}}"></textarea>
                 <span class="profile-text13">Par sevi:</span>
               </div>
 
-              <button type="submit">Submit</button>
+              <button type="submit">Saglabāt</button>
             </form>
           </div>
           <div class="profile-user-search-container">
@@ -446,27 +456,27 @@
             <div class="connect-message-type-place">
               <span class="connect-text09">Ziņojuma tips:</span>
               <select class="connect-message-type-select">
-                <option value="Option 1" selected>Option 1</option>
-                <option value="Option 2">Option 2</option>
-                <option value="Option 3">Option 3</option>
+                <option value="Option 1" selected>Ziņojums par kļūdu/labojums</option>
+                <option value="Option 2">Priekšlikums</option>
+                <option value="Option 3">Pārkāpuma ziņojums</option>
               </select>
             </div>
             <div class="connect-message-content-place">
-              <input
+              <textarea
                 type="text"
                 placeholder="placeholder"
                 class="connect-message-content-field input"
-              />
+              ></textarea>
               <span class="connect-text10">Ziņojuma teksts:</span>
             </div>
           </div>
           <div class="connect-container1">
-            <button class="connect-cancel-message-button button">
+            <button class="connect-cancel-message-button button" (click)="toHomePage()">
               <span class="connect-text11">
                 <span class="connect-text12">Atcelt</span>
               </span>
             </button>
-            <button class="connect-send-message-button button">
+            <button class="connect-send-message-button button" onclick="alert('Jusu ziņojums ir nosūtīts')">
               <span class="connect-text13">
                 <span class="connect-text14">Nosūtīt</span>
               </span>

@@ -6,5 +6,6 @@ namespace API.Controllers
     {
         public int EventId { get; set; }
         public List<int> Participants { get; set; }
+        public string username { get; set; }
     }
 }

@@ -113,7 +113,35 @@ namespace API.Controllers
             }
             return Ok("{}");
         }
+        [HttpPost("BlockPublishing")]
+        public async Task<ActionResult> PostBlockPublishing(AppUser user)
+        {
 
+            try
+            {
+                var result = _context.AppUsers.Where(x => x.UserId == user.UserId).SingleOrDefault();
+                if (result.Role ==3)
+                {
+                    result.Role = 1;
+                    _context.SaveChanges();
+                    return Ok("{}");
+                }
+                else
+                {
+                    result.Role = 3;
+                    _context.SaveChanges();
+                    return Ok("{}");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+
+            return BadRequest("Unknown error");
+
+        }
         //Edit user info
         //Edit user role**
         //CRUD PASAKUMS + Get pasakums list

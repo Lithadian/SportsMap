@@ -75,7 +75,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   userProfile:any;
   eventMapParticipants:any;
   selectedEvent:any;
-
+  selectedUser:any;
   paricipated:boolean;
   
   checkParticipation():boolean{
@@ -213,6 +213,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   logOut(): void {
     this.socialAuthService.signOut();
     this.userRole = null;
+    window.location.reload();
   };
   
   getUsers(){
@@ -233,13 +234,14 @@ export class AppComponent implements OnInit, AfterViewInit {
   };
   updateUserProfile(){
     this.http.post('https://localhost:5001/api/User/UpdateUser',this.userProfile,this.httpOptions).subscribe(response => {
+      alert('Profila infomācija ir saglabāta');
     }, error=>{
       console.log(error);
     })  
   };
   loginUser(){
     this.http.post('https://localhost:5001/api/User/LoginUser',this.userInfo,this.httpOptions).subscribe(response => {
-      if(response ==1 || response == 2){
+      if(response ==1 || response == 2 || response == 3){
         this.userRole = response;
       }
       else if(response = "User Created") {
@@ -250,11 +252,12 @@ export class AppComponent implements OnInit, AfterViewInit {
     })
   };
   CreateEventPost(){
-
       this.http.post('https://localhost:5001/api/Event/CreateEvent',this.Event,this.httpOptions).subscribe(response => {
         this.getEventList();
+        alert('Pasākums izveidots');
       }, error=>{
         console.log(error);
+        alert('Radās kļūda veidojot pasākumu');
       })    
   };
   getEventList(){
@@ -262,7 +265,6 @@ export class AppComponent implements OnInit, AfterViewInit {
       this.events = this.events;
     this.http.get('https://localhost:5001/api/Event/GetEventList').subscribe(response => {
       this.events = response;
-      //this.getEventParticipantsCount();
       this.getEventParticipants();
     }, error=>{
       console.log(error);
@@ -271,28 +273,38 @@ export class AppComponent implements OnInit, AfterViewInit {
   };
   getEventParticipants(){
     this.http.post('https://localhost:5001/api/Event/GetEventParticipants',this.events,this.httpOptions).subscribe(response => {
-      this.eventMapParticipants = response;            
+      this.eventMapParticipants = response;        
     }, error=>{
       console.log(error);
     }) 
   };
   eventParticipate(){
-    console.log(this.selectedEvent.eventId);
     this.eventParticipant = {
       EventId : this.selectedEvent.eventId,
       UserId: this.userInfo.UserId
     }
-    console.log(this.eventParticipant);
+    var event = this.selectedEvent;
     this.http.post('https://localhost:5001/api/Event/JoinEvent',this.eventParticipant,this.httpOptions).subscribe(response => { 
-      console.log(response);
+      this.getEventParticipants();
+      this.paricipated = !this.checkParticipation();
     }, error=>{
       console.log(error);
     }) 
   }
-
+  blockPublishing(){
+    this.http.post('https://localhost:5001/api/User/BlockPublishing',this.selectedUser,this.httpOptions).subscribe(response => { 
+      this.getUsers();
+    }, error=>{
+      console.log(error);
+    })
+  }
   selectEvent(event:any){
     this.selectedEvent = event;
     this.paricipated = this.checkParticipation();
+  };
+  selectUser(User:any){
+    this.selectedUser = User;
+
   };
 
   removeT(input: string) {

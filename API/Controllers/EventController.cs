@@ -99,10 +99,9 @@ namespace API.Controllers
             foreach (var ev in eventlist)
             {
                 var participantList = _context.EventUsers.Where(x => x.EventId == ev.EventId).Select(x => x.UserId).ToList();
-                //_context.EventUsers.Include(e => e.UserId).Where(x => x.EventId == ev.EventId).ToList()
-                listParticipats.Add(new EventParticipantsId { Participants = participantList, EventId = ev.EventId });
+                var _username = _context.AppUsers.Where(x => x.UserId == ev.EventAuthor).Select(x => x.Username).FirstOrDefault().ToString();
+                listParticipats.Add(new EventParticipantsId { Participants = participantList, EventId = ev.EventId, username = _username });
             }
-
             return listParticipats;
         }
     }

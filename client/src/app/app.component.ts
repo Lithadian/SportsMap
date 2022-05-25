@@ -414,10 +414,11 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   // map page functions
   showOnMap(event:any) {
-    this.events
+    // this.events
+    // console.log(event)
     this.map = new google.maps.Map(this.mapElement.nativeElement, {
-      center:{ lat: event.placeCoordX , lng: event.placeCoordX},
-      zoom: 8,
+      center:{ lat: event.placeCoordX , lng: event.placeCoordY},
+      zoom: 14,
     });
     var i;
     for (i = 0; i < this.events.length; i++) {  

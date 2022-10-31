@@ -1,4 +1,6 @@
-﻿namespace API.Controllers
+﻿using System;
+
+namespace API.Controllers
 {
     public class Eventinfo
     {
